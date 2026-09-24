@@ -80,6 +80,12 @@ base-profiles:
       - "ubuntu_resolute"
     meta_packages: 
       - intel-edge-base-standard
+    meta_packages_by_os: # extras only added when running on the matching OS variant
+      ubuntu_noble:
+        - linux-firmware
+      ubuntu_resolute:
+        - linux-firmware-intel-graphics
+        - linux-firmware-intel-wireless
       
   base-realtime:
     display_name: "Intel Edge Realtime Profile"
@@ -117,6 +123,9 @@ profiles:
       - "wcl"
     meta_packages: # additional package to install on top of base profiles
       - intel-edge-media-gst
+    meta_packages_by_os: # extras only added when running on the matching OS variant
+      ubuntu_resolute:
+        - gstreamer1.0-plugins-extra
 
   npu:
     display_name: "NPU"

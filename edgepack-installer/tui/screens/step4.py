@@ -646,11 +646,18 @@ class Step4Screen(_ButtonNavMixin, BaseWizardScreen):
         self._append_log("Starting installation…\n")
 
         repos = list((app.detected_os_entry or {}).get("repositories", {}).values())
+        selected_profiles = [app.selected_profile, *app.selected_addon_profiles]
         prerequisites = required_prerequisites(
             app.processor,
-            [app.selected_profile, *app.selected_addon_profiles],
+            selected_profiles,
             app.detected_os_key,
         )
+        hidden_packages: list[str] = []
+        for _key in selected_profiles:
+            if _key:
+                hidden_packages.extend(
+                    app.processor.hidden_os_packages(_key, app.detected_platform_key, app.detected_os_key)
+                )
 
         # Ensure /var/log/edgepack/ is writable (requires root on first run).
         _log_dir_ok = _ensure_log_dir(sudo_password)
@@ -704,7 +711,7 @@ class Step4Screen(_ButtonNavMixin, BaseWizardScreen):
             schedule=app.call_from_thread,
         )
         run_install(sorted(packages.items()), repos, sudo_password=sudo_password,
-                    prerequisites=prerequisites, **kwargs)
+                    prerequisites=prerequisites, force_packages=hidden_packages, **kwargs)
 
     # ------------------------------------------------------------------
     # Install callbacks  (invoked on Textual thread via call_from_thread)

@@ -103,6 +103,7 @@ def build_pkg_entries(
     profile_key: str,
     addon_profile_keys: list[str] | None = None,
     platform_key: str | None = None,
+    os_key: str | None = None,
 ) -> list[dict]:
     """Build the flat package entry list from the selected base-profile plus any add-ons.
 
@@ -116,7 +117,7 @@ def build_pkg_entries(
     """
     entries: list[dict] = []
 
-    meta_packages = processor.profile_packages(profile_key, platform_key) if profile_key else []
+    meta_packages = processor.profile_packages(profile_key, platform_key, os_key) if profile_key else []
 
     # Level 0 — root
     root = _make_entry(
@@ -158,7 +159,7 @@ def build_pkg_entries(
     # Level 1 — Add-on packages section (one per selected optional profile)
     addon_packages: list[str] = []
     for addon_key in (addon_profile_keys or []):
-        addon_packages.extend(processor.addon_packages(addon_key, platform_key))
+        addon_packages.extend(processor.addon_packages(addon_key, platform_key, os_key))
 
     if addon_packages:
         addon_header = _make_entry(

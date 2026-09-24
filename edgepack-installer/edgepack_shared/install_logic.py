@@ -291,11 +291,15 @@ def _call_direct(fn, *args):
 
 def run_install(packages, repos, output_callback, finished_callback,
                 progress_callback=None, schedule=_call_direct, sudo_password=None,
-                prerequisites=None):
+                prerequisites=None, force_packages=None):
     """Start a background thread that runs the apt install script.
 
     Args:
         packages: list of (name, version) tuples.
+        force_packages: optional list of package names appended to the apt
+            command unversioned, without surfacing in the UI/summary (YAML
+            ``meta_packages_by_os``). Names already in ``packages`` are skipped
+            so they aren't listed twice.
         repos: list of repository config dicts from the YAML ``repositories``
             section (each has ``repository_url``, ``repository_dist``,
             ``repository_components``).
@@ -329,7 +333,11 @@ def run_install(packages, repos, output_callback, finished_callback,
 
     def target():
         try:
-            script = _build_install_script(packages, repos, prerequisites)
+            existing = {name for name, _ in packages}
+            all_packages = list(packages) + [
+                (name, "") for name in (force_packages or []) if name not in existing
+            ]
+            script = _build_install_script(all_packages, repos, prerequisites)
 
             if not script:
                 # _build_install_script returns "" when a repository is missing

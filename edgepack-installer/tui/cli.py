@@ -259,9 +259,9 @@ def install_command(args) -> int:
         return 3
 
     # ---- Resolve package list ----
-    packages = list(processor.profile_packages(args.base_profile, platform_key))
+    packages = list(processor.profile_packages(args.base_profile, platform_key, os_key))
     for addon_key in args.addons:
-        packages.extend(processor.addon_packages(addon_key, platform_key))
+        packages.extend(processor.addon_packages(addon_key, platform_key, os_key))
     packages = _dedupe(packages)
 
     if not packages:
@@ -270,6 +270,10 @@ def install_command(args) -> int:
 
     prerequisites = required_prerequisites(processor, [args.base_profile, *args.addons], os_key)
     repos = list((os_entry or {}).get("repositories", {}).values())
+
+    hidden_packages: list[str] = []
+    for _key in [args.base_profile, *args.addons]:
+        hidden_packages.extend(processor.hidden_os_packages(_key, platform_key, os_key))
 
     # ---- Summary ----
     print(f"\nBase profile : {base_display} ({args.base_profile})")
@@ -286,7 +290,7 @@ def install_command(args) -> int:
 
     # No confirmation prompt — this path is unattended for scripted validation.
     print("\nRequirements met — proceeding with installation...\n")
-    code = _run_install_blocking(packages, repos, prerequisites)
+    code = _run_install_blocking(packages, repos, prerequisites, hidden_packages)
 
     if code == 0:
         print("\n\u2714 Installation completed successfully.")
@@ -296,7 +300,8 @@ def install_command(args) -> int:
     return code
 
 
-def _run_install_blocking(packages: list[str], repos: list[dict], prerequisites: dict) -> int:
+def _run_install_blocking(packages: list[str], repos: list[dict], prerequisites: dict,
+                          force_packages: list[str] | None = None) -> int:
     """Run edgepack_shared.install_logic.run_install synchronously and stream its output."""
     done = threading.Event()
     result = {"code": 1}
@@ -316,6 +321,7 @@ def _run_install_blocking(packages: list[str], repos: list[dict], prerequisites:
         finished_callback=_on_finished,
         sudo_password=None,
         prerequisites=prerequisites,
+        force_packages=force_packages,
     )
     done.wait()
     return result["code"]

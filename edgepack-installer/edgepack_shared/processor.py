@@ -39,6 +39,27 @@ def _resolve_platform_packages(pkgs, platform_key: str | None) -> list[str]:
     return []
 
 
+def _resolve_os_extra_packages(entry, platform_key: str | None, os_key: str | None) -> list[str]:
+    """Resolve a profile entry's ``meta_packages_by_os.<os_key>`` extras.
+
+    These are installed but never shown in the UI, so they are resolved
+    separately from the visible ``meta_packages``. Platform-resolved (so the
+    map form is still supported), order preserved, duplicates dropped.
+    """
+    entry = entry or {}
+    by_os = entry.get('meta_packages_by_os') or {}
+    if not (os_key and isinstance(by_os, dict)):
+        return []
+    pkgs = _resolve_platform_packages(by_os.get(os_key) or [], platform_key)
+    seen: set[str] = set()
+    result: list[str] = []
+    for pkg in pkgs:
+        if pkg not in seen:
+            seen.add(pkg)
+            result.append(pkg)
+    return result
+
+
 def _parse_version(version_str: str) -> tuple[int, ...]:
     """Parse a dotted version string into a tuple of ints for comparison.
 
@@ -307,10 +328,11 @@ class Processor:
 
         return issues
 
-    def profile_packages(self, profile_key: str, platform_key: str | None = None) -> list[str]:
-        """Meta-package names for a given base-profile key, resolved for the active platform."""
-        pkgs = self.entry('base-profiles', profile_key).get('meta_packages') or []
-        return _resolve_platform_packages(pkgs, platform_key)
+    def profile_packages(self, profile_key: str, platform_key: str | None = None,
+                         os_key: str | None = None) -> list[str]:
+        """Visible meta-package names for a base-profile (excludes meta_packages_by_os)."""
+        entry = self.entry('base-profiles', profile_key) or {}
+        return _resolve_platform_packages(entry.get('meta_packages') or [], platform_key)
 
     def base_profiles_for_platform(
         self,
@@ -334,10 +356,22 @@ class Processor:
             result.append((key, entry.get('display_name') or key, platform_ok and os_ok))
         return result
 
-    def addon_packages(self, addon_key: str, platform_key: str | None = None) -> list[str]:
-        """Meta-package names for an add-on profile, resolved for the active platform."""
-        pkgs = self.entry('profiles', addon_key).get('meta_packages') or []
-        return _resolve_platform_packages(pkgs, platform_key)
+    def addon_packages(self, addon_key: str, platform_key: str | None = None,
+                       os_key: str | None = None) -> list[str]:
+        """Visible meta-package names for an add-on profile (excludes meta_packages_by_os)."""
+        entry = self.entry('profiles', addon_key) or {}
+        return _resolve_platform_packages(entry.get('meta_packages') or [], platform_key)
+
+    def hidden_os_packages(self, profile_key: str, platform_key: str | None = None,
+                           os_key: str | None = None) -> list[str]:
+        """``meta_packages_by_os`` extras for a base or add-on profile.
+
+        Installed for the matching OS variant but never shown in the package
+        tree, summary, or size total — merged into the apt command only at the
+        final install hand-off.
+        """
+        entry = self.entry('profiles', profile_key) or self.entry('base-profiles', profile_key)
+        return _resolve_os_extra_packages(entry, platform_key, os_key)
 
     def profile_prerequisites(self, profile_key: str, os_key: str | None = None) -> dict | None:
         """Return the 'prerequisites' block for a base-profile or add-on profile key.

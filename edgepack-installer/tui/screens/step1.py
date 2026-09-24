@@ -503,7 +503,7 @@ class Step1Screen(BaseWizardScreen):
         installed_warnings: list[str] = []
         for key, entry in proc.section("base-profiles").items():
             entry = entry or {}
-            meta_pkgs = proc.profile_packages(key, app.detected_platform_key)
+            meta_pkgs = proc.profile_packages(key, app.detected_platform_key, app.detected_os_key)
             installed_pkgs = [p for p in meta_pkgs if p in installed]
             if installed_pkgs:
                 pkg_name = installed_pkgs[0]

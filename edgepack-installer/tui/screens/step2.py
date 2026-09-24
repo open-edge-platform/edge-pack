@@ -167,14 +167,14 @@ class Step2Screen(_ButtonNavMixin, BaseWizardScreen):
 
         # Build pkg_entries (preserving any surviving add-ons from a previous visit)
         app.pkg_entries = build_pkg_entries(
-            proc, profile_key, app.selected_addon_profiles, platform_key
+            proc, profile_key, app.selected_addon_profiles, platform_key, os_key
         )
 
         # ── Base profile box ──
         base_entry = proc.entry("base-profiles", profile_key)
         base_display = base_entry.get("display_name") or profile_key
         base_description = base_entry.get("description") or ""
-        base_pkgs = proc.profile_packages(profile_key, platform_key)
+        base_pkgs = proc.profile_packages(profile_key, platform_key, os_key)
         base_box = self.query_one("#s2-base-box", Vertical)
         base_box.border_title = f"Base Profile: {base_display}"
         for pkg in base_pkgs:
@@ -213,7 +213,7 @@ class Step2Screen(_ButtonNavMixin, BaseWizardScreen):
                     entry = entry or {}
                     display = entry.get("display_name") or key
                     description = entry.get("description") or ""
-                    packages = proc.addon_packages(key, platform_key)
+                    packages = proc.addon_packages(key, platform_key, os_key)
                     pkg_str = "  ".join(packages) if packages else "(none)"
                     pre_checked = key in app.selected_addon_profiles
 
@@ -297,7 +297,7 @@ class Step2Screen(_ButtonNavMixin, BaseWizardScreen):
 
         app.selected_addon_profiles = addons
         app.pkg_entries = build_pkg_entries(
-            app.processor, app.selected_profile, addons, app.detected_platform_key
+            app.processor, app.selected_profile, addons, app.detected_platform_key, app.detected_os_key
         )
         self._refresh_summary()
 
