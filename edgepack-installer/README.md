@@ -1,4 +1,4 @@
-# EdgePack TUI Installer
+# EdgePack TUI and CLI Installer
 
 
 A terminal-based installer for Intel EdgePack software packages, built with [Textual](https://textual.textualize.io/).
@@ -46,6 +46,112 @@ python3 -m tui list
 
 ---
 
+## YAML installation choices
+
+The CLI accepts the same base profile and add-on choices as the TUI wizard.
+The user configuration is separate from the bundled package catalog; do not edit
+`data/edgepacks-template.yml` to make installation selections.
+
+A minimal `choices.yml` selects just one base profile:
+
+```yaml
+base_profile: base-standard
+```
+
+To select optional add-ons:
+
+```yaml
+base_profile: base-standard
+addons:
+	- ffmpeg
+	- manageability
+```
+
+See [the complete example](data/user-options-example.yml) for optional fields.
+
+| Field | Required | Default / meaning |
+|---|---|---|
+| `base_profile` | Yes | One base-profile key from `list` |
+| `addons` | No | `[]`: no optional add-ons; only listed add-ons are selected |
+| `edgepack_version` | No | Current installer version, currently `"2026.2"`; quote this string |
+| `schema_version` | No | Integer `1` |
+
+The version field checks compatibility with the current installer. It does not
+download another EdgePack release or pin APT package versions. Packages,
+prerequisites, and repositories are resolved automatically using the detected
+CPU, OS, and kernel. Unsupported or disabled profiles and incompatible add-ons
+are rejected, just as in the wizard. For example, `npu` currently requires Ubuntu
+24.04; it is not supported on Ubuntu 26.04.
+
+The file must contain one UTF-8 YAML mapping, at most 64 KiB. Unknown or duplicate
+fields, wrong types, anchors, aliases, and custom tags are rejected. Passwords,
+reboot, arbitrary package/repository overrides, and host overrides are not
+configuration options. A restart is always left to the user.
+
+From the source directory:
+
+```bash
+python3 -m tui list
+python3 -m tui install --config choices.yml --dry-run
+python3 -m tui install --config choices.yml --dry-run --json
+sudo python3 -m tui install --config choices.yml
+```
+
+When using a virtual environment, run installation with that environment's Python
+explicitly, for example `sudo .venv/bin/python -m tui install --config choices.yml`.
+
+With the standalone executable:
+
+```bash
+./edgepack-installer list --json
+./edgepack-installer install --config /path/to/choices.yml --dry-run
+sudo ./edgepack-installer install --config /path/to/choices.yml --json
+```
+
+Paths are relative to the current working directory unless absolute. Do not mix
+`--config` with positional profile arguments. The existing positional command
+continues to work and also accepts `--dry-run` and `--json`:
+
+```bash
+./edgepack-installer install base-standard ffmpeg --dry-run
+```
+
+**Installation is unattended:** without `--dry-run`, `install` immediately
+proceeds after validation and requires root. It can add repository keys, sources
+and APT preferences, install prerequisites, and install or downgrade packages.
+No confirmation prompt or automatic reboot is performed.
+
+Dry-run requires no root and does not access the network, write logs or system
+configuration, or invoke APT. It checks the actual host and previews profile
+packages, additional OS packages, repositories, and prerequisites. It is not an
+APT simulation: dependency versions and package availability are determined only
+during installation. Unsupported hosts still return a validation failure.
+
+### JSON output and exit codes
+
+`--json` emits one result object to stdout. During installation, package-manager
+output streams to stderr; it is not included in the JSON object. Normal help
+output remains plain text. Results include `schema_version`, `command`, `status`,
+`dry_run`, `exit_code`, `selection`, `host`, `plan`, `errors`, and
+`restart_recommended`. `list --json` additionally includes `profiles`. Unavailable
+selection/host/plan data is `null`. Errors include a `code`, `message`, and an
+optional `field`. Successful dry-runs never recommend a restart.
+
+| Exit code | Meaning |
+|---|---|
+| `0` | Success |
+| `1` | Privilege or operational error |
+| `2` | Invalid arguments, YAML, or unknown selection |
+| `3` | Incompatible selection or empty package list |
+| `4` | Unsupported host |
+| `130` | Interrupted |
+| Other | Installation subprocess exit code, such as APT's `100` |
+
+Subprocess codes are passed through and can overlap installer codes. Use the
+JSON error code (such as `installation_failed` or `unsupported_host`) to identify
+the failure stage. Interrupting the CLI does not guarantee that an already
+started package operation has stopped or been rolled back.
+
 ## Building a standalone executable (PyInstaller)
 
 The installer can be packaged into a single self-contained binary that requires no Python or dependencies on the target machine.
@@ -88,13 +194,27 @@ No Python, no pip, no dependencies needed on the target.
 
 ## Installation log
 
-Every installation run writes a log to:
+The TUI writes timestamped installation logs under:
 
 ```
-/var/log/edgepack/edgepack-installer.log
+/var/log/edgepack/
 ```
 
-The log includes a timestamp, the packages being installed, all `apt` output, and the final exit code. The path can be changed in `tui/screens/step4.py` (`LOG_PATH` constant).
+The TUI falls back to a user-writable location if needed. The CLI streams its
+installation output without creating a persistent log. Redirect output to retain
+it; for example, `sudo ./edgepack-installer install --config choices.yml --json
+>result.json 2>install.log`. Dry-run does not create installation logs.
+
+## Tests
+
+Run from `edgepack-installer` with PyYAML installed:
+
+```bash
+python3 -m unittest discover -s tests -p 'test_*.py'
+```
+
+Tests use mocked host and installation operations; they do not install packages,
+modify repositories, or require root.
 
 ---
 

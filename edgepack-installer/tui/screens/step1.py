@@ -218,7 +218,7 @@ class Step1Screen(BaseWizardScreen):
                     with Vertical(classes="group-box", id="box-version") as box:
                         box.border_title = " ○  EdgePack Version "
                         with RadioSet(id=_radiset_id("version")):
-                            yield RadioButton("v2026.2", name="2026.2", id=_radio_id("version", 0), value=True)
+                            yield RadioButton(f"v{app.tui_version}", name=app.tui_version, id=_radio_id("version", 0), value=True)
 
                 # Bottom right: hardcoded notes
                 with Vertical(id="step1-notes-box") as notes:

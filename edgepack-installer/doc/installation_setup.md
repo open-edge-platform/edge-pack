@@ -27,3 +27,42 @@
 $ sudo chmod +x ./edgepack-installer
 $ ./edgepack-installer
 ```
+
+## Installing from user YAML
+
+For unattended CLI installation, supply the choices you would make in the TUI.
+Only one base profile is required. For example, `choices.yml` can contain:
+
+```yaml
+base_profile: base-standard
+```
+
+To select add-ons, add only the desired profile keys:
+
+```yaml
+base_profile: base-standard
+addons:
+	- ffmpeg
+	- manageability
+```
+
+Omitted add-ons mean none. The installer detects the host, checks compatibility,
+and includes required packages and prerequisites automatically. The current
+EdgePack version is used unless explicitly specified. Do not put passwords in
+this file.
+
+```bash
+./edgepack-installer list
+./edgepack-installer install --config choices.yml --dry-run
+sudo ./edgepack-installer install --config choices.yml
+```
+
+Dry-run validates and previews without root or system changes; it does not verify
+APT dependency versions or package availability. Without `--dry-run`, installation
+starts after validation with no confirmation prompt. Restart manually after a
+successful installation.
+
+Add `--json` for a machine-readable result on stdout. Installation output then
+streams to stderr. See the [YAML and CLI reference](../README.md#yaml-installation-choices)
+for optional fields, error codes, and output details, and the
+[example configuration](../data/user-options-example.yml).
