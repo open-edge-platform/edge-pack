@@ -1,0 +1,6 @@
+base_profile: base-standard
+addons:
+  - ffmpeg
+  - manageability
+edgepack_version: "2026.2"
+schema_version: 1

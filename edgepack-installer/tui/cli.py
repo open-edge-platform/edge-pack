@@ -14,11 +14,12 @@
 
 from __future__ import annotations
 
-import logging
+from dataclasses import asdict
+import json
 import os
-import re
 import sys
 import threading
+from typing import TextIO
 
 from edgepack_shared.host import (
     host_cpu_model, read_os_release, host_os_dot_version,
@@ -26,18 +27,10 @@ from edgepack_shared.host import (
 )
 from edgepack_shared.install_logic import run_install
 from edgepack_shared.processor import Processor
+from edgepack_shared.user_config import ConfigError, load_selection, normalize_selection
 
+from .__version__ import __version__
 from .package_logic import required_prerequisites
-
-
-def _make_cli_logger() -> logging.Logger:
-    """Return a logger that writes to both the TUI log and stdout."""
-    from edgepack_shared.log import ep_logger as _ep_log
-    _log = _ep_log(name="cli_install", log_file="/var/log/edgepack/edgepack_tui.log")
-    return _log.get_logger()
-
-
-logger: logging.Logger | None = None  # initialised on first call to install_command
 
 
 def _dedupe(seq: list[str]) -> list[str]:
@@ -94,8 +87,16 @@ def _check_host_requirements(processor: Processor) -> dict:
 # 'list' command
 # ---------------------------------------------------------------------------
 
-def list_command(processor: Processor) -> None:
+def list_command(processor: Processor, json_output: bool = False) -> None:
     """Print every base profile and add-on profile key defined in the template."""
+    if json_output:
+        result = command_result("list")
+        result["profiles"] = {
+            "base_profiles": processor.section("base-profiles"),
+            "addons": processor.section("profiles"),
+        }
+        print(json.dumps(result))
+        return
     print("Base profiles (choose exactly one):\n")
     base_profiles = processor.section("base-profiles")
     key_width = max((len(k) for k in base_profiles), default=0)
@@ -126,189 +127,174 @@ def list_command(processor: Processor) -> None:
 # 'install' command
 # ---------------------------------------------------------------------------
 
-# Maximum allowed length for profile keys passed on the CLI. Prevents
-# oversized or malformed arguments from reaching downstream processing.
-_MAX_PROFILE_KEY_LEN = 128
-
-
-def _validate_profile_key(key: str, label: str) -> int | None:
-    """Return an exit code (non-zero) if *key* is invalid, else None."""
-    if not key:
-        return 2
-    if len(key) > _MAX_PROFILE_KEY_LEN:
-        print(
-            f"error: {label} exceeds maximum length of {_MAX_PROFILE_KEY_LEN} characters",
-            file=sys.stderr,
-        )
-        logger.warning("Validation failure (%s): argument exceeds maximum length of %d chars", label, _MAX_PROFILE_KEY_LEN)  # type: ignore[reportPossiblyUnboundVariable]
-        return 2
-    # Reject characters that could be interpreted as shell metacharacters or
-    # path separators, since keys are embedded in shell commands.
-    if re.search(r'[^a-zA-Z0-9_\-]', key):
-        print(
-            f"error: {label} contains invalid characters (only a-z, A-Z, 0-9, _, - allowed)",
-            file=sys.stderr,
-        )
-        logger.warning("Validation failure (%s): argument contains disallowed characters", label)  # type: ignore[reportPossiblyUnboundVariable]
-        return 2
-    return None
-
-
-def install_command(args) -> int:
-    """Resolve, validate, and install *args.base_profile* + *args.addons*.
-
-    Mirrors the checks enforced by the TUI (host requirements at startup,
-    then the compatibility rules behind Step 1/2's disabled radios) so the
-    CLI can be trusted as a validation gate. Runs unattended — no
-    confirmation prompt — since this path exists for scripted validation.
-    Returns the process exit code.
-    """
-    global logger
-    logger = _make_cli_logger()
-
-    processor = Processor.load()
-
-    base_profiles = processor.section("base-profiles")
-    addon_profiles = processor.section("profiles")
-
-    err = _validate_profile_key(args.base_profile, "base profile key")
-    if err:
-        return err
-
-    for addon in args.addons:
-        err = _validate_profile_key(addon, "add-on profile key")
-        if err:
-            return err
-
-    if args.base_profile not in base_profiles:
-        print(f"error: unknown base profile '{args.base_profile}'", file=sys.stderr)
-        print(f"       valid base profiles: {', '.join(sorted(base_profiles)) or '(none)'}", file=sys.stderr)
-        print("       run 'edgepack-installer list' to see all options", file=sys.stderr)
-        logger.warning("Validation failure: unknown base profile '%s'", args.base_profile)
-        return 2
-
-    unknown_addons = [a for a in args.addons if a not in addon_profiles]
-    if unknown_addons:
-        print(f"error: unknown add-on profile(s): {', '.join(unknown_addons)}", file=sys.stderr)
-        print(f"       valid add-on profiles: {', '.join(sorted(addon_profiles)) or '(none)'}", file=sys.stderr)
-        print("       run 'edgepack-installer list' to see all options", file=sys.stderr)
-        logger.warning("Validation failure: unknown add-on profile(s): %s", ", ".join(unknown_addons))
-        return 2
-
-    if os.geteuid() != 0:
-        print(
-            "error: installing packages requires root privileges — "
-            "re-run with sudo, e.g. 'sudo edgepack-installer install ...'",
-            file=sys.stderr,
-        )
-        return 1
-
-    # ---- Host requirements (fatal, mirrors UnsupportedPlatformScreen in the TUI) ----
-    print("Checking system requirements...")
-    host = _check_host_requirements(processor)
-    if host["issues"]:
-        print("error: this machine does not meet the installation requirements:", file=sys.stderr)
-        for issue in host["issues"]:
-            print(f"       - {issue}", file=sys.stderr)
-        logger.warning("Host does not meet installation requirements: %s", "; ".join(host["issues"]))
-        return 4
-    print("System requirements: OK")
-
-    platform_key, platform_entry = host["platform_key"], host["platform_entry"]
-    os_key, os_entry = host["os_key"], host["os_entry"]
-    platform_display = (platform_entry or {}).get("display_name") or platform_key
-    os_display = (os_entry or {}).get("display_name") or os_key
-
-    # ---- Base profile compatibility (fatal, mirrors disabled radio in Step 1) ----
-    base_rows = {
-        key: (display, supported)
-        for key, display, supported in processor.base_profiles_for_platform(platform_key, os_key)
+def command_result(command: str, dry_run: bool = False) -> dict:
+    return {
+        "schema_version": 1, "command": command, "status": "ok",
+        "dry_run": dry_run, "exit_code": 0, "selection": None,
+        "host": None, "plan": None, "errors": [], "restart_recommended": False,
     }
-    base_display, base_supported = base_rows.get(args.base_profile, (args.base_profile, False))
-    if not base_supported:
-        entry = base_profiles.get(args.base_profile) or {}
-        supported_platforms = ", ".join(entry.get("supported_platforms") or []) or "any"
-        supported_os = ", ".join(entry.get("supported_os_variants") or []) or "any"
-        print(
-            f"error: base profile '{args.base_profile}' is not supported on this host "
-            f"(detected platform: {platform_display}, os: {os_display})",
-            file=sys.stderr,
-        )
-        print(f"       supported platforms: {supported_platforms} | supported os: {supported_os}", file=sys.stderr)
-        logger.warning("Base profile '%s' is incompatible with detected host", args.base_profile)
-        return 3
 
-    # ---- Add-on compatibility (fatal, mirrors filtered add-on list in Step 2) ----
-    compatible_addons = {key for key, _ in processor.compatible_profiles(args.base_profile, platform_key, os_key)}
-    incompatible = [a for a in args.addons if a not in compatible_addons]
-    if incompatible:
-        for addon_key in incompatible:
-            entry = addon_profiles.get(addon_key) or {}
-            allowed_bases = entry.get("base-profiles") or []
-            reasons = processor.addon_compatibility_issues(addon_key, platform_key, os_key)
-            if allowed_bases and args.base_profile not in allowed_bases:
-                reasons.insert(
-                    0,
-                    f"'{addon_key}' requires base profile {allowed_bases} "
-                    f"(selected: '{args.base_profile}')",
-                )
-            print(f"error: add-on profile '{addon_key}' is not compatible with this selection:", file=sys.stderr)
-            for reason in reasons or ["incompatible with detected host"]:
-                print(f"       - {reason}", file=sys.stderr)
-            logger.warning("Add-on '%s' is not compatible with the selected profile/host", addon_key)
-        return 3
 
-    # ---- Resolve package list ----
-    packages = list(processor.profile_packages(args.base_profile, platform_key, os_key))
-    for addon_key in args.addons:
-        packages.extend(processor.addon_packages(addon_key, platform_key, os_key))
-    packages = _dedupe(packages)
-
-    if not packages:
-        print("error: resolved package list is empty — nothing to install", file=sys.stderr)
-        return 3
-
-    prerequisites = required_prerequisites(processor, [args.base_profile, *args.addons], os_key)
-    repos = list((os_entry or {}).get("repositories", {}).values())
-
-    hidden_packages: list[str] = []
-    for _key in [args.base_profile, *args.addons]:
-        hidden_packages.extend(processor.hidden_os_packages(_key, platform_key, os_key))
-
-    # ---- Summary ----
-    print(f"\nBase profile : {base_display} ({args.base_profile})")
-    print(f"Add-ons      : {', '.join(args.addons) if args.addons else '(none)'}")
-    print(f"Platform     : {platform_display}")
-    print(f"OS           : {os_display}")
-    print("Packages to install:")
-    for name in packages:
-        print(f"  - {name}")
-    if prerequisites.get("packages"):
-        print("Prerequisite packages:")
-        for name in prerequisites["packages"]:
-            print(f"  - {name}")
-
-    # No confirmation prompt — this path is unattended for scripted validation.
-    print("\nRequirements met — proceeding with installation...\n")
-    code = _run_install_blocking(packages, repos, prerequisites, hidden_packages)
-
-    if code == 0:
-        print("\n\u2714 Installation completed successfully.")
-        print("  A system restart is recommended to apply all changes.")
+def report_error(result: dict, json_output: bool, code: int, error_code: str,
+                 message: str, field: str | None = None) -> int:
+    error = {"code": error_code, "message": message}
+    if field is not None:
+        error["field"] = field
+    result.update(status="error", exit_code=code, errors=[error])
+    if json_output:
+        print(json.dumps(result))
     else:
-        print(f"\n\u2718 Installation failed (exit code {code}). See output above for details.", file=sys.stderr)
+        print(f"error: {message}", file=sys.stderr)
     return code
 
 
+def _print_plan(result: dict) -> None:
+    selection, host, plan = result["selection"], result["host"], result["plan"]
+    print(f"Base profile : {selection['base_profile']}")
+    print(f"EdgePack     : {selection['edgepack_version']}")
+    print(f"Add-ons      : {', '.join(selection['addons']) or '(none)'}")
+    print(f"Platform     : {host['platform_key']}")
+    print(f"OS           : {host['os_key']}")
+    for label, packages in (
+        ("Packages", plan["packages"]),
+        ("Additional OS packages", plan["additional_os_packages"]),
+        ("Prerequisite packages", plan["prerequisites"]["packages"]),
+    ):
+        print(f"{label}:")
+        for name in packages:
+            print(f"  - {name}")
+        if not packages:
+            print("  (none)")
+    for label, repos in (
+        ("Prerequisite repositories", plan["prerequisites"]["repositories"]),
+        ("Repositories", plan["repositories"]),
+    ):
+        print(f"{label}:")
+        for repo in repos:
+            print(f"  - {repo.get('repository_url', '')} {repo.get('repository_dist', '')}")
+        if not repos:
+            print("  (none)")
+
+
+def install_command(args) -> int:
+    """Validate a YAML or positional selection, preview it, or install unattended."""
+    dry_run = getattr(args, "dry_run", False)
+    json_output = getattr(args, "json", False)
+    result = command_result("install", dry_run)
+
+    def fail(code, error_code, message, field=None):
+        return report_error(result, json_output, code, error_code, message, field)
+
+    try:
+        config = getattr(args, "config", None)
+        if config is not None:
+            if args.base_profile is not None or args.addons:
+                raise ConfigError("Use either --config or positional profiles, not both")
+            selection = load_selection(config, __version__)
+        else:
+            selection = normalize_selection(
+                {"base_profile": args.base_profile, "addons": args.addons}, __version__
+            )
+    except ConfigError as error:
+        return fail(2, "invalid_selection", str(error), error.field)
+
+    result["selection"] = asdict(selection)
+    processor = Processor.load()
+    base_profiles = processor.section("base-profiles")
+    addon_profiles = processor.section("profiles")
+    if selection.base_profile not in base_profiles:
+        return fail(2, "unknown_profile",
+                    f"Unknown base profile '{selection.base_profile}'; "
+                    f"valid profiles: {', '.join(sorted(base_profiles))}", "base_profile")
+    unknown = [key for key in selection.addons if key not in addon_profiles]
+    if unknown:
+        return fail(2, "unknown_addon",
+                    f"Unknown add-ons: {', '.join(unknown)}; "
+                    f"valid add-ons: {', '.join(sorted(addon_profiles))}", "addons")
+
+    host = _check_host_requirements(processor)
+    result["host"] = {key: host[key] for key in ("platform_key", "os_key", "issues")}
+    if host["issues"]:
+        return fail(4, "unsupported_host", "; ".join(host["issues"]))
+    platform_key, os_key = host["platform_key"], host["os_key"]
+    supported_bases = {
+        key for key, _, supported in processor.base_profiles_for_platform(platform_key, os_key)
+        if supported
+    }
+    if selection.base_profile not in supported_bases:
+        return fail(3, "incompatible_profile",
+                    f"Base profile '{selection.base_profile}' is not supported on "
+                    f"{platform_key} / {os_key}", "base_profile")
+    compatible = {
+        key for key, _ in processor.compatible_profiles(selection.base_profile, platform_key, os_key)
+    }
+    reasons = []
+    for key in selection.addons:
+        if key not in compatible:
+            issues = processor.addon_compatibility_issues(key, platform_key, os_key)
+            allowed_bases = (addon_profiles[key] or {}).get("base-profiles") or []
+            if allowed_bases and selection.base_profile not in allowed_bases:
+                issues.append(f"requires base profile: {', '.join(allowed_bases)}")
+            reasons.append(f"{key}: {'; '.join(issues) or 'incompatible with selection'}")
+    if reasons:
+        return fail(3, "incompatible_addon", "; ".join(reasons), "addons")
+
+    packages = list(processor.profile_packages(selection.base_profile, platform_key, os_key))
+    for key in selection.addons:
+        packages.extend(processor.addon_packages(key, platform_key, os_key))
+    packages = _dedupe(packages)
+    if not packages:
+        return fail(3, "empty_selection", "Resolved package list is empty; nothing to install")
+    profiles = [selection.base_profile, *selection.addons]
+    hidden_packages = _dedupe([
+        name for key in profiles
+        for name in processor.hidden_os_packages(key, platform_key, os_key)
+        if name not in packages
+    ])
+    prerequisites = required_prerequisites(processor, profiles, os_key)
+    repos = list((host["os_entry"] or {}).get("repositories", {}).values())
+    result["plan"] = {
+        "packages": packages, "additional_os_packages": hidden_packages,
+        "prerequisites": prerequisites, "repositories": repos,
+    }
+    if not json_output:
+        _print_plan(result)
+    if dry_run:
+        if json_output:
+            print(json.dumps(result))
+        else:
+            print("\nDry run: no changes made. Profile preview only; APT dependencies and versions are not verified.")
+        return 0
+    if os.geteuid() != 0:
+        return fail(1, "root_required", "Installing packages requires root; re-run with sudo")
+
+    if not json_output:
+        print("\nRequirements met; proceeding with installation...\n")
+    code = _run_install_blocking(
+        packages, repos, prerequisites, hidden_packages,
+        output_stream=sys.stderr if json_output else sys.stdout,
+    )
+    if code != 0:
+        return fail(code, "installation_failed", f"Installation failed (exit code {code}); see installation output")
+    result["restart_recommended"] = True
+    if json_output:
+        print(json.dumps(result))
+    else:
+        print("\nInstallation completed successfully. A manual system restart is recommended.")
+    return 0
+
+
 def _run_install_blocking(packages: list[str], repos: list[dict], prerequisites: dict,
-                          force_packages: list[str] | None = None) -> int:
+                          force_packages: list[str] | None = None,
+                          output_stream: TextIO | None = None) -> int:
     """Run edgepack_shared.install_logic.run_install synchronously and stream its output."""
     done = threading.Event()
     result = {"code": 1}
+    stream = output_stream if output_stream is not None else sys.stdout
 
     def _on_output(line: str) -> None:
-        sys.stdout.write(line if line.endswith("\n") else line + "\n")
-        sys.stdout.flush()
+        stream.write(line if line.endswith("\n") else line + "\n")
+        stream.flush()
 
     def _on_finished(code: int = 0) -> None:
         result["code"] = code
