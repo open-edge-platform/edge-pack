@@ -1,7 +1,7 @@
 # Get Started - Edge Pack
 
-The recommended install method is using Edge Pack TUI Installer, a terminal-based wizard that
-detects your platform and OS and guides you through the process. No need for hand-crafting
+The recommended installation method is using Edge Pack TUI Installer, a terminal-based wizard
+that detects your platform and OS and guides you through the process. No need for hand-crafting
 `apt` commands or configuring the repository. To start, follow the steps:
 
 1. Download the package: [Releases](https://github.com/open-edge-platform/edge-pack/releases).

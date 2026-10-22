@@ -1,27 +1,29 @@
-```{eval-rst}
+<!--hide_directive```{eval-rst}
 .. meta::
    :description: Use Edge Packs from Open Edge Platform to enable the full potential of Intel hardware at the edge.
    :keywords: Linux, drivers, system enablement, Linux config for Intel hardware
-```
+``` hide_directive-->
 
-# Edge Packs
+# Edge Pack
 
+<!--hide_directive
 ::::{container} component_header_row
 <div class="component_card_widget">
   <a class="icon_github" href="https://github.com/open-edge-platform/edge-pack">
      GitHub project
   </a>
 </div>
-
+hide_directive-->
 > [!NOTE]
-> Edge Packs are currently available as a technical preview. Do not use in production environments.
-
+> Edge Pack is currently available as a technical preview for evaluation purposes, we do not
+> recommend this early version for use in production environments.
+<!--hide_directive
 ::::
-
+hide_directive-->
 
 Enable the full potential of Intel hardware on Linux for edge use cases.
 
-Edge Packs, installed via APT, constitute a lean enablement layer that quickly and easily
+Edge Pack, installed via APT, constitutes a lean enablement layer that quickly and easily
 extends Linux OS with Intel-validated software and drivers that unlock specific Intel platform
 capabilities, such as:
 
@@ -67,11 +69,11 @@ Conflicting or unsupported combinations are flagged before anything is installed
 **Add-on Profiles**
 
 | Profile | Name | Description |
-|---|---|---|
-| `ffmpeg` | FFmpeg | FFmpeg multimedia framework with Intel GPU support |
-| `gstreamer` | GStreamer | GStreamer multimedia framework with Intel GPU support |
-| `npu` | NPU | Enables Intel's Neural Processing Unit (NPU) technology on Edge platforms |
-| `manageability` | Manageability | Enables Intel's vPRO Manageability on Edge platforms |
+|-----------------|---------------|---------------------------------------------------------|
+| `ffmpeg`        | FFmpeg        | FFmpeg multimedia framework with Intel GPU support      |
+| `gstreamer`     | GStreamer     | GStreamer multimedia framework with Intel GPU support   |
+| `npu`           | NPU           | Enables Intel's Neural Processing Unit (NPU) technology on Edge platforms |
+| `manageability` | Manageability | Enables Intel's vPRO Manageability on Edge platforms    |
 
 
 
@@ -87,7 +89,5 @@ See (System Requirements)[./get-started/system-requirements.md] for more details
 
 Get Started <./get-started.md>
 Release Notes <./release-notes.md>
-REmove Display from Ubuntu Desktop <./ubuntu-desktop-remove-display.md>
-
 :::
 hide_directive-->

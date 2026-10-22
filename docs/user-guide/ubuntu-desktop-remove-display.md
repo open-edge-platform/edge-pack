@@ -2,7 +2,13 @@
 .. meta::
    :description: Convert an Ubuntu Desktop installation into a headless, console-only system that behaves like Ubuntu Server.
    :keywords: Ubuntu Desktop, Ubuntu Server, systemd, gdm3, display manager, headless, console
+
+:orphan:
 ```
+
+
+
+
 
 # Convert Ubuntu Desktop to Behave Like Ubuntu Server (No Display)
 
