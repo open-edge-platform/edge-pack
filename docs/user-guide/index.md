@@ -28,8 +28,19 @@ text-based installer (TUI), the installer CLI, or the native APT package
 management process.
 
 Edge Packs are grouped into technical domain areas so you can install the
-capabilities needed for a particular system or workload. Start with the
-[installation overview](installation/index.md) to choose an installation method.
+capabilities needed for a particular system or workload. Use the selector below
+to generate the appropriate installation commands.
+
+<!--hide_directive
+<script type="module" crossorigin src="../../_static/edgepack-installer-files/iframe-resizer.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<iframe
+	id="installerFrame"
+	src="../../_static/edgepack-installer-files/selector.html"
+	style="width: 100%; min-width: 350px; border: 0; overflow: hidden;"
+	title="Install Edge Pack"
+></iframe>
+hide_directive-->
 
 Enable the full potential of Intel hardware on Linux for edge use cases.
 

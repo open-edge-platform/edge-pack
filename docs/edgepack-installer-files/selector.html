@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Install Edge Pack</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="app-wrap st-responsive-container idz-page">
+      <h1 id="page-title" class="section-title">Install Edge Pack</h1>
+
+      <div id="error" class="notice notice-error" hidden></div>
+
+      <form id="selector-form" class="selector-form" hidden>
+        <fieldset class="st-section st-section-accent">
+          <legend class="st-section-title">Operating System</legend>
+          <div id="os-options" class="choice-grid spark-button-group option-button-group"></div>
+        </fieldset>
+
+        <fieldset class="st-section st-section-accent">
+          <legend class="st-section-title">Method</legend>
+          <div id="method-options" class="choice-grid spark-button-group option-button-group"></div>
+        </fieldset>
+
+        <fieldset class="st-section st-section-accent">
+          <legend class="st-section-title">Base Profile</legend>
+          <div id="base-options" class="choice-grid spark-button-group option-button-group"></div>
+        </fieldset>
+
+        <fieldset class="st-section st-section-accent">
+          <legend class="st-section-title">Add-ons</legend>
+          <div id="addon-options" class="choice-grid spark-button-group option-button-group"></div>
+        </fieldset>
+      </form>
+
+      <section id="result" class="result" hidden aria-live="polite">
+        <div class="st-section st-section-accent">
+          <div class="st-section-title">Install</div>
+          <div class="st-section-content">
+            <div class="st-section-content-row method-row">
+              <strong id="result-title">Installation commands</strong>
+            </div>
+            <div class="st-section-content-row">
+              <div class="code-box st-code-snippet-multi-line">
+                <button id="copy-command" class="spark-button spark-button-size-s spark-button-primary code-copy" type="button">Copy</button>
+                <pre id="command-output" class="st-code-snippet-content"></pre>
+              </div>
+            </div>
+            <div class="st-section-content-row">
+              <div id="requirements" class="notice"></div>
+            </div>
+            <div class="st-section-content-row">
+              <a class="source-badge" href="https://github.com/open-edge-platform/edge-pack" target="_blank" rel="noopener noreferrer">
+                Open source: review the installer on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="st-section st-section-accent">
+          <div class="st-section-title">Packages</div>
+          <div class="st-section-content">
+            <div class="st-section-content-row">
+              <span id="package-output"></span>
+            </div>
+          </div>
+        </div>
+        <div class="st-section st-section-accent next-steps">
+          <div class="st-section-title">Next Steps</div>
+          <div class="st-section-content">
+            <div class="st-section-content-row next-steps-summary">
+              <div>
+                <strong>Need a headless system?</strong>
+                <p id="headless-description" class="notice"></p>
+              </div>
+              <button id="toggle-headless" class="spark-button spark-button-size-s spark-button-primary" type="button" aria-expanded="false" aria-controls="headless-panel">Headless Support</button>
+            </div>
+            <div id="headless-panel" class="headless-panel" hidden>
+              <ol id="headless-steps" class="headless-steps"></ol>
+              <div id="headless-verification" class="headless-verification"></div>
+              <a id="headless-guide" class="source-badge" target="_parent">Read the complete headless guide</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="selector.js"></script>
+  </body>
+</html>

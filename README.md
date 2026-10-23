@@ -11,6 +11,12 @@ management process.
 Edge Packs are grouped into technical domain areas so you can install the
 capabilities needed for a particular system or workload.
 
+<p align="center">
+	<a href="https://docs.openedgeplatform.intel.com/dev/OEP-articles/edge-pack/index.html">
+		<img src="https://img.shields.io/badge/Launch%20Web%20UI-0068B5?style=for-the-badge&labelColor=0068B5" alt="Launch the Edge Pack Web UI" />
+	</a>
+</p>
+
 *<mark>**[!NOTE]**</mark> Edge Pack is currently available as a **Tech Preview**.*
 
 ## What Edge Pack Provides
@@ -53,8 +59,10 @@ capabilities needed for a particular system or workload.
 
 ## Getting Started
 
-Start with the [installation overview](docs/user-guide/installation/index.md)
-to choose an installation method for the target system.
+Choose the target system and installation method in the
+[interactive installation selector](docs/user-guide/index.md).
+It generates commands for the selected Ubuntu release, installation method,
+profile, and add-ons directly from the same manifest used by the installer.
 
 Three installation methods are available:
 

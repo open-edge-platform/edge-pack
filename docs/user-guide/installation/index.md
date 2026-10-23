@@ -4,6 +4,11 @@ Edge Pack supports three installation methods. All methods use the compatibility
 repository, and package definitions in
 [`edgepacks-template.yml`](../../../edgepack-installer/data/edgepacks-template.yml).
 
+For generated commands, open the
+[interactive installation selector](../index.md)
+and choose the Ubuntu release, installation method, base profile, and optional
+add-ons.
+
 ## Choose an installation method
 
 | Method | Host validation | Interactive | Intended use |
