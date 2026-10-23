@@ -140,7 +140,7 @@ def _apt_commands(
     prerequisite_repositories, prerequisite_packages = _prerequisites(selected_profiles, os_key)
     if prerequisite_repositories:
         commands.extend(_repository_commands(
-            prerequisite_repositories, "edgepack-prerequisite", "edgepack-prerequisite"
+            prerequisite_repositories, "edgepack-prereq", "edgepack-prereq"
         ))
         commands.append("sudo apt-get update")
         if prerequisite_packages:

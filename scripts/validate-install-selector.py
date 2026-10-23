@@ -73,6 +73,17 @@ def main() -> int:
             raise ValueError(f"APT repositories are not bound to a keyring: {identity}")
         if "apt-key" in apt_commands or "trusted=yes" in apt_commands:
             raise ValueError(f"Unsafe legacy APT configuration found: {identity}")
+        if "edgepack-prerequisite" in apt_commands:
+            raise ValueError(f"Conflicting prerequisite repository naming found: {identity}")
+        if "intel-edge-npu" in installation["packages"]:
+            for prerequisite_path in (
+                "/etc/apt/keyrings/edgepack-prereq-0.gpg",
+                "/etc/apt/sources.list.d/edgepack-prereq.list",
+            ):
+                if prerequisite_path not in apt_commands:
+                    raise ValueError(
+                        f"NPU selection does not reuse installer prerequisite paths: {identity}"
+                    )
         if not installation["packages"]:
             raise ValueError(f"No packages resolved for selection: {identity}")
         for method in ("tui", "installer-cli"):
