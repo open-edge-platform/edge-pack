@@ -75,10 +75,10 @@ def _download_commands(base: dict) -> list[str]:
     binary_url = shlex.quote(base["installerBinaryUrl"])
     checksum_url = shlex.quote(base["installerChecksumUrl"])
     return [
-        f"curl -fL {binary_url} -o edgepack-installer",
-        f"curl -fL {checksum_url} -o edgepack-installer.sha256",
-        "sha256sum -c edgepack-installer.sha256",
-        "chmod +x edgepack-installer",
+        f"curl -fL {binary_url} -o edgepack-installer &&",
+        f"curl -fL {checksum_url} -o edgepack-installer.sha256 &&",
+        "sha256sum -c edgepack-installer.sha256 &&",
+        "chmod +x edgepack-installer &&",
     ]
 
 

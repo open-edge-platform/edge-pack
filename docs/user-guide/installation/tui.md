@@ -11,8 +11,8 @@ to obtain the current release URLs, or download `edgepack-installer` and
 `edgepack-installer.sha256` from the repository's latest release.
 
 ```bash
-sha256sum -c edgepack-installer.sha256
-chmod +x edgepack-installer
+sha256sum -c edgepack-installer.sha256 &&
+chmod +x edgepack-installer &&
 sudo ./edgepack-installer
 ```
 

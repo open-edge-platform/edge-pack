@@ -78,9 +78,9 @@ progress.
 
 ```bash
 # 1. Verify the downloaded binary against its published checksum
-sha256sum -c edgepack-installer.sha256
+sha256sum -c edgepack-installer.sha256 &&
 
-# 2. Run the interactive wizard
+# 2. Run the interactive wizard only when verification succeeds
 sudo ./edgepack-installer
 ```
 

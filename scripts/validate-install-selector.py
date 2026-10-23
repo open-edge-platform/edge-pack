@@ -73,6 +73,16 @@ def main() -> int:
             raise ValueError(f"Unsafe legacy APT configuration found: {identity}")
         if not installation["packages"]:
             raise ValueError(f"No packages resolved for selection: {identity}")
+        for method in ("tui", "installer-cli"):
+            installer_commands = commands[method]
+            for required_gate in (
+                "sha256sum -c edgepack-installer.sha256 &&\n",
+                "chmod +x edgepack-installer &&\n",
+            ):
+                if required_gate not in installer_commands:
+                    raise ValueError(
+                        f"{method} does not gate installer execution for selection: {identity}"
+                    )
 
     html = (WEB_DIR / "selector.html").read_text(encoding="utf-8")
     if "platform-options" in html:
