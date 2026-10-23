@@ -74,7 +74,7 @@ function renderSingle(hostId, options, key, disabledValues = new Set()) {
       state[key] = option.value;
       if (key === "os") repairBaseProfile();
       if (key === "baseProfile" || key === "os") repairAddons();
-      render();
+      render({ name: key, value: option.value });
     });
     host.appendChild(item);
   });
@@ -89,7 +89,7 @@ function renderAddons() {
     item.querySelector("input").addEventListener("change", (event) => {
       if (event.target.checked) state.addons.push(addon.value);
       else state.addons = state.addons.filter((value) => value !== addon.value);
-      render();
+      render({ name: "addons", value: addon.value });
     });
     host.appendChild(item);
   });
@@ -173,7 +173,7 @@ function renderHeadlessSupport() {
   element("headless-guide").href = new URL(support.guideUrl, window.parent.location.href);
 }
 
-function render() {
+function render(focusTarget) {
   const availableBases = availableBaseProfiles();
   renderSingle("os-options", config.operatingSystems, "os");
   renderSingle("method-options", config.methods, "method");
@@ -186,6 +186,11 @@ function render() {
   renderAddons();
   renderResult();
   writeUrl();
+  if (focusTarget) {
+    const replacement = [...document.querySelectorAll(`input[name="${focusTarget.name}"]`)]
+      .find((input) => input.value === focusTarget.value);
+    replacement?.focus();
+  }
 }
 
 function initialiseState() {
