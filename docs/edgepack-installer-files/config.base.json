@@ -5,7 +5,7 @@
   "installerChecksumUrl": "https://github.com/open-edge-platform/edge-pack/releases/latest/download/edgepack-installer.sha256",
   "headlessSupport": {
     "description": "After installing Edge Pack, convert Ubuntu Desktop to a console-only system. Review each check before continuing.",
-    "guideUrl": "../../ubuntu-desktop-remove-display.html",
+    "guideUrl": "ubuntu-desktop-remove-display.html",
     "steps": [
       {
         "title": "Use the console boot target",

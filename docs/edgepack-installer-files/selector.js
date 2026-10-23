@@ -170,7 +170,7 @@ function renderHeadlessSupport() {
     verificationDescription,
     commandBox(verification.command),
   );
-  element("headless-guide").href = support.guideUrl;
+  element("headless-guide").href = new URL(support.guideUrl, window.parent.location.href);
 }
 
 function render() {

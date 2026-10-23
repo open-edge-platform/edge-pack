@@ -26,6 +26,8 @@ def main() -> int:
         raise ValueError("Operating system choices must not include subtitles")
 
     headless = config.get("headlessSupport") or {}
+    if headless.get("guideUrl") != "ubuntu-desktop-remove-display.html":
+        raise ValueError("Headless guide URL must be relative to the embedding documentation page")
     headless_commands = [step["command"] for step in headless.get("steps", [])]
     headless_commands.append((headless.get("verification") or {}).get("command", ""))
     if any(not command.strip() for command in headless_commands):
@@ -107,6 +109,9 @@ def main() -> int:
             raise ValueError(f"Missing OEP iframe integration marker: {marker}")
     if not (WEB_DIR / "iframe-resizer.js").is_file():
         raise ValueError("Missing same-origin iframe resizer")
+    selector_script = (WEB_DIR / "selector.js").read_text(encoding="utf-8")
+    if "new URL(support.guideUrl, window.parent.location.href)" not in selector_script:
+        raise ValueError("Headless guide URL must resolve against the embedding page")
 
     print(f"Validated {len(seen)} installation selections.")
     return 0
