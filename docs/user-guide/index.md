@@ -31,6 +31,16 @@ Edge Packs are grouped into technical domain areas so you can install the
 capabilities needed for a particular system or workload. Use the selector below
 to generate the appropriate installation commands.
 
+If the selector is not displayed, open the
+[hosted installation selector](https://docs.openedgeplatform.intel.com/dev/OEP-articles/edge-pack/index.html).
+You can also use the documentation for a specific installation path:
+
+- [Installation overview](installation/index.md)
+- [Install with the TUI](installation/tui.md)
+- [Install with the installer CLI](installation/installer-cli.md)
+- [Install with APT](installation/apt.md)
+- [Convert Ubuntu Desktop to a headless system](ubuntu-desktop-remove-display.md)
+
 <!--hide_directive
 <script type="module" crossorigin src="../../_static/edgepack-installer-files/iframe-resizer.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />

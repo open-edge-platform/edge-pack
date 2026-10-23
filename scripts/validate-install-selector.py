@@ -118,6 +118,16 @@ def main() -> int:
     ):
         if marker not in embed:
             raise ValueError(f"Missing OEP iframe integration marker: {marker}")
+    for fallback_link in (
+        "[hosted installation selector](https://docs.openedgeplatform.intel.com/dev/OEP-articles/edge-pack/index.html)",
+        "[Installation overview](installation/index.md)",
+        "[Install with the TUI](installation/tui.md)",
+        "[Install with the installer CLI](installation/installer-cli.md)",
+        "[Install with APT](installation/apt.md)",
+        "[Convert Ubuntu Desktop to a headless system](ubuntu-desktop-remove-display.md)",
+    ):
+        if fallback_link not in embed:
+            raise ValueError(f"Missing GitHub-visible installation fallback: {fallback_link}")
     if not (WEB_DIR / "iframe-resizer.js").is_file():
         raise ValueError("Missing same-origin iframe resizer")
     selector_script = (WEB_DIR / "selector.js").read_text(encoding="utf-8")
