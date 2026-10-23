@@ -21,6 +21,16 @@ hide_directive-->
 ::::
 hide_directive-->
 
+Edge Pack is a set of modular platform software packages that installs key
+functionality for your operating system, including graphics, media, edge AI,
+networking, and manageability. Install Edge Pack with the interactive
+text-based installer (TUI), the installer CLI, or the native APT package
+management process.
+
+Edge Packs are grouped into technical domain areas so you can install the
+capabilities needed for a particular system or workload. Start with the
+[installation overview](installation/index.md) to choose an installation method.
+
 Enable the full potential of Intel hardware on Linux for edge use cases.
 
 Edge Pack, installed via APT, constitutes a lean enablement layer that quickly and easily
@@ -89,5 +99,10 @@ See (System Requirements)[./get-started/system-requirements.md] for more details
 
 Get Started <./get-started.md>
 Release Notes <./release-notes.md>
+
+Installation <installation/index.md>
+Install with the TUI <installation/tui.md>
+Install with the Installer CLI <installation/installer-cli.md>
+Install with APT <installation/apt.md>
 :::
 hide_directive-->

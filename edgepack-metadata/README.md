@@ -2,7 +2,9 @@
 
 This directory contains the Debian packaging definitions for [Edge Pack](../README.md). These metapackages group the drivers, libraries, and tools needed to enable Intel platform capabilities on Ubuntu. APT resolves their dependencies; the driver and application payloads come from the configured package repositories.
 
-For installation on supported hardware, use the [Edge Pack installer](../edgepack-installer/README.md). This directory is primarily for maintainers building or updating the metapackages.
+For installation on supported hardware, use the
+[Edge Pack installation guide](../docs/user-guide/installation/index.md). This
+directory is primarily for maintainers building or updating the metapackages.
 
 ## Release Layout
 
