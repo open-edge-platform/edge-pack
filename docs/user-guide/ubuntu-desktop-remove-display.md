@@ -1,3 +1,15 @@
+```{eval-rst}
+.. meta::
+   :description: Convert an Ubuntu Desktop installation into a headless, console-only system that behaves like Ubuntu Server.
+   :keywords: Ubuntu Desktop, Ubuntu Server, systemd, gdm3, display manager, headless, console
+
+:orphan:
+```
+
+
+
+
+
 # Convert Ubuntu Desktop to Behave Like Ubuntu Server (No Display)
 
 This guide turns an **Ubuntu Desktop** installation into a headless, console-only
@@ -5,7 +17,7 @@ system that behaves like **Ubuntu Server** — no graphical login, no desktop
 environment loaded at boot. It applies to both **Ubuntu 24.04 LTS** and
 **Ubuntu 26.04**, which both use `systemd` and the `gdm3` display manager.
 
-## Background: what each command does
+## Background: What Each Command Does
 
 | Command | Purpose |
 | --- | --- |
@@ -16,7 +28,7 @@ environment loaded at boot. It applies to both **Ubuntu 24.04 LTS** and
 | `apt autoremove --purge` | Removes dependencies that APT no longer considers necessary. Review its proposed changes before accepting them. |
 | `reboot` | Restarts so the machine comes up in console-only mode. |
 
-### About the two systemd "targets"
+### About the Two systemd "Targets"
 
 - `graphical.target` → boots into the full desktop with a graphical login (GDM).
 - `multi-user.target` → boots into a multi-user text console (like Ubuntu Server).
@@ -26,9 +38,9 @@ switching to it makes a Desktop install behave like a Server install.
 
 ---
 
-## Step-by-step
+## Step-by-Step
 
-### 1. Set the default boot target to console
+### 1. Set the Default Boot Target to Console
 
 ```bash
 sudo systemctl set-default multi-user.target
@@ -40,9 +52,9 @@ Expected output:
 Created symlink '/etc/systemd/system/default.target' → '/usr/lib/systemd/system/multi-user.target'.
 ```
 
-### 2. Stop and disable the display manager
+### 2. Stop and Disable the Display Manager
 
-Ubuntu Desktop uses **GDM3** by default:
+Ubuntu Desktop uses `gdm3` by default:
 
 ```bash
 sudo systemctl disable --now gdm3
@@ -58,7 +70,7 @@ Synchronizing state of gdm3.service with SysV service script...
 Removed '/etc/systemd/system/display-manager.service'.
 ```
 
-### 3. Make sure the GPU PF has no clients
+### 3. Make Sure the GPU PF Has No Clients
 
 Before removing the desktop packages, verify that no process is using a Direct
 Rendering Manager (DRM) device belonging to the GPU physical function (PF).
@@ -87,7 +99,7 @@ associated service or application and run the check again. Do not continue
 until the command produces no output. If `gdm`, `gnome-shell`, `Xorg`, or
 `Xwayland` appears, confirm that `gdm3` was stopped in the previous step.
 
-### 4. Remove the desktop packages
+### 4. Remove the Desktop Packages
 
 Install the Ubuntu Server package set first. This keeps packages shared with a
 server installation from being selected for automatic removal:
@@ -135,7 +147,7 @@ The system now boots to a text console login, like Ubuntu Server.
 
 ---
 
-## Verify the change
+## Verify the Change
 
 After rebooting, log in at the console and run:
 
@@ -166,4 +178,4 @@ dpkg-query -W -f='${db:Status-Abbrev} ${binary:Package}\n' \
   ubuntu-desktop ubuntu-desktop-minimal gdm3 2>/dev/null | grep '^ii'
 ```
 
----
+
