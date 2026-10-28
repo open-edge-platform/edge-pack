@@ -1,5 +1,27 @@
 # Get Started - Edge Pack
 
+To deploy Edge Pack, make sure your setup meets the [system requirements](./get-started/system-requirements.md)
+
+Edge Pack supports three installation methods, all using the compatibility, repository, and
+package definitions in `/edgepack-installer/data/edgepacks-template.yml`.
+Select the installation method best suited to your setup using the form below. You can also
+learn more about each method in the following installation guides:
+
+- [Install with the TUI](get-started/install-tui.md)
+- [Install with the installer CLI](get-started/install-cli.md)
+- [Install with APT](get-started/install-apt.md)
+
+
+<!--hide_directive
+<script type="module" crossorigin src="../../_static/edgepack-installer-files/iframe-resizer.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<iframe
+	id="installerFrame"
+	src="../../_static/edgepack-installer-files/selector.html"
+	style="width: 100%; min-width: 350px; border: 0; overflow: hidden;"
+	title="Install Edge Pack"
+></iframe>
+hide_directive-->
 
 
 
@@ -11,46 +33,10 @@
 
 
 
-The recommended installation method is using Edge Pack TUI Installer, a terminal-based wizard
-that detects your platform and OS and guides you through the process. No need for hand-crafting
-`apt` commands or configuring the repository. To start, follow the steps:
-
-1. Download the package: [Releases](https://github.com/open-edge-platform/edge-pack/releases).
-2. Run the installer.
-
-   ```bash
-   sudo chmod +x ./edgepack-installer
-   sudo ./edgepack-installer
-   ```
-3. Go through a 4-step wizard.
-
-   - **Profile selection**: choose your base profile (standard or realtime kernel) and detect
-     your hardware platform.
-   - **Add-on packages**: select optional add-on profiles to install alongside the base.
-   - **Installation summary**: review compatibility warnings and confirm what will be installed.
-   - **Installation**: live progress as packages are downloaded and installed via `apt`.
-
-   | Keyboard Navigation              | Action                                            |
-   |----------------------------------|---------------------------------------------------|
-   | `Tab` / `Shift+Tab`              | Move focus between sections                       |
-   | `↑` / `↓`                        | Move between items within a list (Step 2 add-ons) |
-   | `←` / `→`                        | Move between buttons                              |
-   | `Space`                          | Toggle a checkbox / press the focused button      |
-   | `Enter`                          | Press the focused button                          |
-   | `Ctrl+Q`                         | Quit                                              |
 
 
 
-Learn more [about the installer](.get-started/tui-installer.md) or see what the process looks
-like in the video:
 
-https://github.com/user-attachments/assets/ef562165-f427-434d-a472-1244b3e430f6
-
-A checksum is published with the binary, so you can verify the download integrity:
-
-```bash
-sha256sum -c edgepack-installer.sha256
-```
 
 
 > [!WARNING]
@@ -62,7 +48,6 @@ sha256sum -c edgepack-installer.sha256
 > $ sudo apt install -y linux-generic-7.0
 > $ sudo reboot
 > ```
-
 
 <!--hide_directive
 :::{toctree}
