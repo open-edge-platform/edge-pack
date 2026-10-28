@@ -1,63 +1,75 @@
+<!--hide_directive ```{eval-rst}
+.. meta::
+   :description: Choose and start an Edge Pack installation method using the TUI installer, installer CLI, or APT.
+   :keywords: Edge Pack, get started, installation, TUI, installer CLI, APT
+``` hide_directive-->
+
 # Get Started - Edge Pack
 
-The recommended installation method is using Edge Pack TUI Installer, a terminal-based wizard
-that detects your platform and OS and guides you through the process. No need for hand-crafting
-`apt` commands or configuring the repository. To start, follow the steps:
+To deploy Edge Pack, make sure your setup meets the [system requirements](./get-started/system-requirements.md).
 
-1. Download the package: [Releases](https://github.com/open-edge-platform/edge-pack/releases).
-2. Run the installer.
+Edge Pack supports three installation methods, all using the compatibility, repository, and
+package definitions in `edgepack-installer/data/edgepacks-template.yml`. Select the
+installation method best suited to your setup using the form below, or compare them here:
 
-   ```bash
-   sudo chmod +x ./edgepack-installer
-   sudo ./edgepack-installer
-   ```
-3. Go through a 4-step wizard.
+| Method                                      | Host validation | Interactive | Intended use |
+| ------------------------------------------- | --------------- | ----------- | --- |
+| [TUI installer](get-started/install-tui.md) | Yes             | Yes         | Recommended for individual systems |
+| [Installer CLI](get-started/install-cli.md) | Yes             | No          | Automated installation with guardrails |
+| [APT](get-started/install-apt.md)           | No              | No          | Native package management and provisioning workflows |
 
-   - **Profile selection**: choose your base profile (standard or realtime kernel) and detect
-     your hardware platform.
-   - **Add-on packages**: select optional add-on profiles to install alongside the base.
-   - **Installation summary**: review compatibility warnings and confirm what will be installed.
-   - **Installation**: live progress as packages are downloaded and installed via `apt`.
+The TUI and installer CLI resolve packages and prerequisites identically. APT installation
+exposes every repository and package command, so the operator is responsible for selecting
+a supported combination.
 
-   | Keyboard Navigation              | Action                                            |
-   |----------------------------------|---------------------------------------------------|
-   | `Tab` / `Shift+Tab`              | Move focus between sections                       |
-   | `↑` / `↓`                        | Move between items within a list (Step 2 add-ons) |
-   | `←` / `→`                        | Move between buttons                              |
-   | `Space`                          | Toggle a checkbox / press the focused button      |
-   | `Enter`                          | Press the focused button                          |
-   | `Ctrl+Q`                         | Quit                                              |
-
+<!--hide_directive
+<script type="module" crossorigin src="../../_static/edgepack-installer-files/iframe-resizer.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<iframe
+	id="installerFrame"
+	src="../../_static/edgepack-installer-files/selector.html"
+	style="width: 100%; min-width: 350px; border: 0; overflow: hidden;"
+	title="Install Edge Pack"
+></iframe>
+hide_directive-->
 
 
-Learn more [about the installer](.get-started/tui-installer.md) or see what the process looks
-like in the video:
 
-https://github.com/user-attachments/assets/ef562165-f427-434d-a472-1244b3e430f6
 
-A checksum is published with the binary, so you can verify the download integrity:
 
-```bash
-sha256sum -c edgepack-installer.sha256
-```
+
+
+
+
+
+
+
+
+
+
 
 
 > [!WARNING]
 > It is advisable to install Edge Pack on a freshly installed [Ubuntu Linux](https://releases.ubuntu.com/).
-> Before installing, make sure your setup meets (System Requirements)[./get-started/system-requirements.md].
-> Ubuntu 24.04.4 default base Kernel is 6.17, upgrade it to Kernel 7.0 manually:
+> Before installing, make sure your setup meets the [system requirements](./get-started/system-requirements.md).
+> Ubuntu 24.04.4's default base Kernel is 6.17. Upgrade it to Kernel 7.0 manually:
+>
 > ```
 > $ sudo apt-get update
 > $ sudo apt install -y linux-generic-7.0
 > $ sudo reboot
 > ```
 
+For console-only deployments, complete the installation first, then follow
+[Convert Ubuntu Desktop to Behave Like Ubuntu Server](./ubuntu-desktop-remove-display.md).
 
 <!--hide_directive
 :::{toctree}
 :hidden:
 
-Install with Terminal User Interface <./get-started/tui-installer.md>
 System Requirements <./get-started/system-requirements.md>
+Install with the TUI <./get-started/install-tui.md>
+Install with the Installer CLI <./get-started/install-cli.md>
+Install with APT <./get-started/install-apt.md>
 :::
 hide_directive-->

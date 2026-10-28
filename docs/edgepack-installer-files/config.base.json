@@ -1,0 +1,89 @@
+{
+  "title": "Install Edge Pack",
+  "defaultMethod": "tui",
+  "installerBinaryUrl": "https://github.com/open-edge-platform/edge-pack/releases/latest/download/edgepack-installer",
+  "installerChecksumUrl": "https://github.com/open-edge-platform/edge-pack/releases/latest/download/edgepack-installer.sha256",
+  "headlessSupport": {
+    "description": "After installing Edge Pack, convert Ubuntu Desktop to a console-only system. Review each check before continuing.",
+    "guideUrl": "ubuntu-desktop-remove-display.html",
+    "steps": [
+      {
+        "title": "Use the console boot target",
+        "description": "Configure the system to boot without the graphical desktop.",
+        "command": "sudo systemctl set-default multi-user.target"
+      },
+      {
+        "title": "Stop the display manager",
+        "description": "Run from a text console or SSH session. This immediately ends active graphical sessions.",
+        "command": "sudo systemctl disable --now gdm3"
+      },
+      {
+        "title": "Identify the GPU physical function",
+        "description": "Note the PCI address reported for the GPU.",
+        "command": "lspci -D | grep -Ei 'VGA|Display'"
+      },
+      {
+        "title": "List the GPU device nodes",
+        "description": "Replace the example GPU_PF value with the PCI address from the previous command.",
+        "command": "GPU_PF=0000:00:02.0\nfind -L /dev/dri/by-path -maxdepth 1 -type c \\\n  -name \"pci-${GPU_PF}-*\" -print"
+      },
+      {
+        "title": "Check for GPU clients",
+        "description": "Do not continue if this lists any processes. Stop them and run the check again.",
+        "command": "sudo fuser -v /dev/dri/by-path/pci-${GPU_PF}-*"
+      },
+      {
+        "title": "Install the Ubuntu Server package set",
+        "description": "Preserve packages shared with an Ubuntu Server installation before removing the desktop.",
+        "command": "sudo apt update\nsudo apt install ubuntu-server"
+      },
+      {
+        "title": "Preview the desktop purge",
+        "description": "Review the proposed package removals before continuing.",
+        "command": "sudo apt-get --simulate purge ubuntu-desktop ubuntu-desktop-minimal gdm3"
+      },
+      {
+        "title": "Remove desktop packages",
+        "description": "Run only after confirming the purge preview is safe for this deployment.",
+        "command": "sudo apt purge ubuntu-desktop ubuntu-desktop-minimal gdm3"
+      },
+      {
+        "title": "Preview unused dependency removal",
+        "description": "Review every package, especially on remote systems. Do not continue if required software is listed.",
+        "command": "sudo apt-get --simulate autoremove --purge"
+      },
+      {
+        "title": "Remove unused dependencies",
+        "description": "Run only after confirming the autoremove preview is safe.",
+        "command": "sudo apt autoremove --purge"
+      },
+      {
+        "title": "Reboot",
+        "description": "The system will restart into a text console.",
+        "command": "sudo reboot"
+      }
+    ],
+    "verification": {
+      "title": "Verify after reboot",
+      "description": "Log in at the console and confirm the graphical environment is inactive.",
+      "command": "# Should print: multi-user.target\nsystemctl get-default\n\n# Should print inactive and disabled, or report that gdm3 is not installed\nsystemctl is-active gdm3\nsystemctl is-enabled gdm3\n\n# Confirm no graphical target is active\nsystemctl status graphical.target\n\n# Should return nothing (no display server processes)\npgrep -a \"Xorg|Xwayland|gnome-shell\"\n\n# Should return no lines beginning with \"ii\"\ndpkg-query -W -f='${db:Status-Abbrev} ${binary:Package}\\n' \\\n  ubuntu-desktop ubuntu-desktop-minimal gdm3 2>/dev/null | grep '^ii'"
+    }
+  },
+  "methods": [
+    {
+      "value": "tui",
+      "label": "TUI installer",
+      "description": "Recommended interactive installation with automatic host detection."
+    },
+    {
+      "value": "installer-cli",
+      "label": "Installer CLI",
+      "description": "Non-interactive installation using the same validation and dependency logic as the TUI."
+    },
+    {
+      "value": "apt",
+      "label": "APT",
+      "description": "Installation using the standard native package management process."
+    }
+  ]
+}

@@ -71,7 +71,7 @@ platforms:
 base-profiles:
   base-standard:
     display_name: "Intel Edge Base Profile"
-    description: "Validated core Intel graphics/media packages, including the platform-enablement DKMS driver, for Ubuntu LTS."
+    description: "Graphics and media software with AI compute support."
     supported_platforms:
       - "ptl"
       - "wcl"
@@ -129,7 +129,7 @@ profiles:
 
   npu:
     display_name: "NPU"
-    description: "Group of software components and ingredients to enable Intel's Neural Processing Unit (NPU) technology on Edge platforms."
+    description: "Software to enable Intel's Neural Processing Unit (NPU) on Edge platforms."
     category: "Intel Technologies"
     base-profiles: # only available for these profile
       - base-standard
@@ -151,7 +151,7 @@ profiles:
 
   manageability:
     display_name: "Manageability"
-    description: "Group of software components and ingredients to enable Intel's vPRO Manageability on Edge platforms."
+    description: "Software to enable Intel vPro manageability on Edge platforms."
     category: "Intel Technologies"
     base-profiles: # only available for these profile
       - base-standard

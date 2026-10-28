@@ -1,0 +1,22 @@
+name: Documentation Check
+
+on:
+  pull_request:
+    branches:
+      - main
+      - release-*
+    paths:
+      - ".github/workflows/docs-reusable-workflow.yaml"
+      - ".github/workflows/documentation-check.yaml"
+      - "docs/**"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  build-documentation:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/docs-reusable-workflow.yaml
+    with:
+      docs_directory: "."
