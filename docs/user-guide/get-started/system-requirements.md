@@ -19,3 +19,11 @@
   - Ubuntu Kernel 7.0+ generic
   - Ubuntu Kernel 7.0+ real-time (Ubuntu 26.04 only)
 
+**Access**:
+
+- Administrative privileges and network access to the configured package repositories
+
+Consult the [project README](https://github.com/open-edge-platform/edge-pack/blob/main/README.md)
+for the current platform and SKU matrix. The manifest remains authoritative when this guide
+and a released installer differ.
+

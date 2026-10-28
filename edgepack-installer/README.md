@@ -4,7 +4,7 @@
 A terminal-based installer for Intel EdgePack software packages, built with [Textual](https://textual.textualize.io/).
 
 > For end-user setup, see the repository's
-> [Edge Pack installation guide](../docs/user-guide/get-started/index.md). This document
+> [Edge Pack installation guide](../docs/user-guide/get-started.md). This document
 > covers running and building the installer from source.
 ---
 

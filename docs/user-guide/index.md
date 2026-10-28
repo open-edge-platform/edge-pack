@@ -12,6 +12,9 @@
   <a class="icon_github" href="https://github.com/open-edge-platform/edge-pack">
      GitHub project
   </a>
+  <a class="icon_documentation" href="https://github.com/open-edge-platform/edge-pack/blob/main/README.md">
+     README
+  </a>
 </div>
 hide_directive-->
 > [!NOTE]
@@ -89,7 +92,6 @@ See (System Requirements)[./get-started/system-requirements.md] for more details
 Get Started <./get-started.md>
 Release Notes <./release-notes.md>
 
-Installation <get-started/index.md>
 Install with the TUI <get-started/install-tui.md>
 Install with the Installer CLI <get-started/install-cli.md>
 Install with APT <get-started/install-apt.md>

@@ -27,6 +27,17 @@ The command exits without changing packages when host validation or profile
 compatibility fails. It does not prompt for confirmation, so review the command
 before using it in automation.
 
+## Verify the release download
+
+The selector downloads the installer and its published SHA-256 checksum from
+the latest GitHub release. Always verify the binary before running it:
+
+```bash
+sha256sum -c edgepack-installer.sha256
+```
+
+Do not run the installer when its checksum does not match.
+
 ## Run from source
 
 For development checkouts:

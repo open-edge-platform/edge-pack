@@ -110,7 +110,7 @@ def main() -> int:
         if class_name not in html:
             raise ValueError(f"Missing OEP selector class: {class_name}")
 
-    embed = (ROOT / "docs" / "user-guide" / "index.md").read_text(encoding="utf-8")
+    embed = (ROOT / "docs" / "user-guide" / "get-started.md").read_text(encoding="utf-8")
     for marker in (
         "../../_static/edgepack-installer-files/iframe-resizer.js",
         "../../_static/edgepack-installer-files/selector.html",
@@ -119,12 +119,10 @@ def main() -> int:
         if marker not in embed:
             raise ValueError(f"Missing OEP iframe integration marker: {marker}")
     for fallback_link in (
-        "[hosted installation selector](https://docs.openedgeplatform.intel.com/dev/OEP-articles/edge-pack/index.html)",
-        "[Installation overview](get-started/index.md)",
-        "[Install with the TUI](get-started/install-tui.md)",
-        "[Install with the installer CLI](get-started/install-cli.md)",
-        "[Install with APT](get-started/install-apt.md)",
-        "[Convert Ubuntu Desktop to a headless system](ubuntu-desktop-remove-display.md)",
+        "[TUI installer](get-started/install-tui.md)",
+        "[Installer CLI](get-started/install-cli.md)",
+        "[APT](get-started/install-apt.md)",
+        "[Convert Ubuntu Desktop to Behave Like Ubuntu Server](./ubuntu-desktop-remove-display.md)",
     ):
         if fallback_link not in embed:
             raise ValueError(f"Missing GitHub-visible installation fallback: {fallback_link}")

@@ -84,9 +84,9 @@ sha256sum -c edgepack-installer.sha256 &&
 sudo ./edgepack-installer
 ```
 
-See the [installation overview](docs/user-guide/get-started/index.md) for system
-requirements and a comparison of the methods. To convert a supported Ubuntu
-Desktop installation to a console-only system, see the
+See the [Get Started guide](docs/user-guide/get-started.md) for a comparison of the
+methods and the [system requirements](docs/user-guide/get-started/system-requirements.md).
+To convert a supported Ubuntu Desktop installation to a console-only system, see the
 [headless Ubuntu guide](docs/user-guide/ubuntu-desktop-remove-display.md).
 
 The following video demonstrates the TUI workflow:
