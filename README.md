@@ -68,9 +68,9 @@ Three installation methods are available:
 
 | Method | Best for | Guide |
 | --- | --- | --- |
-| TUI installer | Guided, interactive installations | [Install with the TUI](docs/user-guide/installation/tui.md) |
-| Installer CLI | Automation with installer compatibility checks | [Install with the installer CLI](docs/user-guide/installation/installer-cli.md) |
-| APT | Native package management and provisioning workflows | [Install with APT](docs/user-guide/installation/apt.md) |
+| TUI installer | Guided, interactive installations | [Install with the TUI](docs/user-guide/get-started/install-tui.md) |
+| Installer CLI | Automation with installer compatibility checks | [Install with the installer CLI](docs/user-guide/get-started/install-cli.md) |
+| APT | Native package management and provisioning workflows | [Install with APT](docs/user-guide/get-started/install-apt.md) |
 
 The TUI installer is recommended for most users. It detects the platform and OS,
 then guides you through profile selection, add-ons, a summary, and installation
@@ -84,7 +84,7 @@ sha256sum -c edgepack-installer.sha256 &&
 sudo ./edgepack-installer
 ```
 
-See the [installation overview](docs/user-guide/installation/index.md) for system
+See the [installation overview](docs/user-guide/get-started/index.md) for system
 requirements and a comparison of the methods. To convert a supported Ubuntu
 Desktop installation to a console-only system, see the
 [headless Ubuntu guide](docs/user-guide/ubuntu-desktop-remove-display.md).

@@ -21,24 +21,39 @@ hide_directive-->
 ::::
 hide_directive-->
 
-Edge Pack is a set of modular platform software packages that installs key
-functionality for your operating system, including graphics, media, edge AI,
-networking, and manageability. Install Edge Pack with the interactive
+Edge Pack is a set of modular platform software packages that add key functionalities to
+your operating system, including graphics, media, edge AI, networking, and manageability.
+Prepared for different technical domains Edge Pack offers the right setup for a particular
+system or workload.
+
+
+
+
+
+There are several ways of deploying Edge Pack. The [Get Started guide](./get-started.md) will
+enable you to select the one that fits best and give you ready-made commands to proceed.
+You can also see
+
+
+
+Use the selector below
+to generate the appropriate installation commands.
+
+
+Install Edge Pack with the interactive
 text-based installer (TUI), the installer CLI, or the native APT package
 management process.
 
-Edge Packs are grouped into technical domain areas so you can install the
-capabilities needed for a particular system or workload. Use the selector below
-to generate the appropriate installation commands.
+
 
 If the selector is not displayed, open the
 [hosted installation selector](https://docs.openedgeplatform.intel.com/dev/OEP-articles/edge-pack/index.html).
 You can also use the documentation for a specific installation path:
 
-- [Installation overview](installation/index.md)
-- [Install with the TUI](installation/tui.md)
-- [Install with the installer CLI](installation/installer-cli.md)
-- [Install with APT](installation/apt.md)
+- [Installation overview](get-started/index.md)
+- [Install with the TUI](get-started/install-tui.md)
+- [Install with the installer CLI](get-started/install-cli.md)
+- [Install with APT](get-started/install-apt.md)
 - [Convert Ubuntu Desktop to a headless system](ubuntu-desktop-remove-display.md)
 
 <!--hide_directive
@@ -51,6 +66,9 @@ You can also use the documentation for a specific installation path:
 	title="Install Edge Pack"
 ></iframe>
 hide_directive-->
+
+
+
 
 Enable the full potential of Intel hardware on Linux for edge use cases.
 
@@ -121,9 +139,9 @@ See (System Requirements)[./get-started/system-requirements.md] for more details
 Get Started <./get-started.md>
 Release Notes <./release-notes.md>
 
-Installation <installation/index.md>
-Install with the TUI <installation/tui.md>
-Install with the Installer CLI <installation/installer-cli.md>
-Install with APT <installation/apt.md>
+Installation <get-started/index.md>
+Install with the TUI <get-started/install-tui.md>
+Install with the Installer CLI <get-started/install-cli.md>
+Install with APT <get-started/install-apt.md>
 :::
 hide_directive-->

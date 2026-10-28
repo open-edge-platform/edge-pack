@@ -13,9 +13,9 @@ add-ons.
 
 | Method | Host validation | Interactive | Intended use |
 | --- | --- | --- | --- |
-| [TUI installer](tui.md) | Yes | Yes | Recommended for individual systems |
-| [Installer CLI](installer-cli.md) | Yes | No | Automated installation with guardrails |
-| [APT](apt.md) | No | No | Native package management and provisioning workflows |
+| [TUI installer](install-tui.md) | Yes | Yes | Recommended for individual systems |
+| [Installer CLI](install-cli.md) | Yes | No | Automated installation with guardrails |
+| [APT](install-apt.md) | No | No | Native package management and provisioning workflows |
 
 The TUI and installer CLI resolve packages and prerequisites identically. APT
 installation exposes every repository and package command, so the operator

@@ -1,5 +1,16 @@
 # Get Started - Edge Pack
 
+
+
+
+
+
+
+
+
+
+
+
 The recommended installation method is using Edge Pack TUI Installer, a terminal-based wizard
 that detects your platform and OS and guides you through the process. No need for hand-crafting
 `apt` commands or configuring the repository. To start, follow the steps:

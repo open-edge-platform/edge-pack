@@ -120,10 +120,10 @@ def main() -> int:
             raise ValueError(f"Missing OEP iframe integration marker: {marker}")
     for fallback_link in (
         "[hosted installation selector](https://docs.openedgeplatform.intel.com/dev/OEP-articles/edge-pack/index.html)",
-        "[Installation overview](installation/index.md)",
-        "[Install with the TUI](installation/tui.md)",
-        "[Install with the installer CLI](installation/installer-cli.md)",
-        "[Install with APT](installation/apt.md)",
+        "[Installation overview](get-started/index.md)",
+        "[Install with the TUI](get-started/install-tui.md)",
+        "[Install with the installer CLI](get-started/install-cli.md)",
+        "[Install with APT](get-started/install-apt.md)",
         "[Convert Ubuntu Desktop to a headless system](ubuntu-desktop-remove-display.md)",
     ):
         if fallback_link not in embed:
