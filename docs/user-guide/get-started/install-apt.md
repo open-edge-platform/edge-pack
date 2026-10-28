@@ -1,3 +1,9 @@
+<!--hide_directive ```{eval-rst}
+.. meta::
+   :description: Install Edge Pack using native APT package management.
+   :keywords: Edge Pack, APT, package management, installation
+``` hide_directive-->
+
 # Install with APT
 
 APT installation uses the standard native package management process. It is
@@ -10,7 +16,7 @@ Use the [interactive installation selector](../index.md)
 to generate the current commands. Repository distributions, signing keys,
 prerequisite repositories, pinning, and package names vary by selection.
 
-## What the generated commands do
+## What the Generated Commands Do
 
 1. Install HTTPS, download, and OpenPGP tooling.
 2. Download each repository key and store it under `/etc/apt/keyrings`.
@@ -22,7 +28,7 @@ prerequisite repositories, pinning, and package names vary by selection.
 The generated commands deliberately do not use the deprecated `apt-key`
 command and do not configure repositories as trusted or unsigned.
 
-## Review before running
+## Review Before Running
 
 - Confirm every repository and key URL belongs to the expected publisher.
 - Confirm the repository distribution matches the installed Ubuntu release.
@@ -30,4 +36,4 @@ command and do not configure repositories as trusted or unsigned.
 - Test provisioning changes on a non-production system first.
 
 For selector source and regeneration instructions, see
-[Maintaining the Installation Selector](../maintenance/installation-selector.md).
+[Maintaining the Installation Selector](https://github.com/open-edge-platform/edge-pack/blob/main/docs/edgepack-installer-files/README.md).

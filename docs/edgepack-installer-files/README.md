@@ -76,9 +76,8 @@ is no longer needed.
 
 ## Documentation publication
 
-The browser assets are committed under `docs/edgepack-installer-files/`. The
-OEP documentation page embeds them from
-`_static/edgepack-installer-files/` using the `hide_directive` block in
-`docs/user-guide/index.md`. This follows the OEP component documentation
+The browser assets in this directory are embedded by the OEP documentation page
+from `_static/edgepack-installer-files/` using the `hide_directive` block in
+`docs/user-guide/get-started.md`. This follows the OEP component documentation
 convention: GitHub displays the Markdown content, while the OEP publication
 pipeline exposes the same-origin iframe assets.

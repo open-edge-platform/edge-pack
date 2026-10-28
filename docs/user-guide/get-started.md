@@ -1,9 +1,15 @@
+<!--hide_directive ```{eval-rst}
+.. meta::
+   :description: Choose and start an Edge Pack installation method using the TUI installer, installer CLI, or APT.
+   :keywords: Edge Pack, get started, installation, TUI, installer CLI, APT
+``` hide_directive-->
+
 # Get Started - Edge Pack
 
 To deploy Edge Pack, make sure your setup meets the [system requirements](./get-started/system-requirements.md).
 
 Edge Pack supports three installation methods, all using the compatibility, repository, and
-package definitions in `/edgepack-installer/data/edgepacks-template.yml`. Select the
+package definitions in `edgepack-installer/data/edgepacks-template.yml`. Select the
 installation method best suited to your setup using the form below, or compare them here:
 
 | Method                                      | Host validation | Interactive | Intended use |
@@ -46,7 +52,8 @@ hide_directive-->
 > [!WARNING]
 > It is advisable to install Edge Pack on a freshly installed [Ubuntu Linux](https://releases.ubuntu.com/).
 > Before installing, make sure your setup meets the [system requirements](./get-started/system-requirements.md).
-> Ubuntu 24.04.4 default base Kernel is 6.17, upgrade it to Kernel 7.0 manually:
+> Ubuntu 24.04.4's default base Kernel is 6.17. Upgrade it to Kernel 7.0 manually:
+>
 > ```
 > $ sudo apt-get update
 > $ sudo apt install -y linux-generic-7.0

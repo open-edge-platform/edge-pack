@@ -96,7 +96,7 @@ https://github.com/user-attachments/assets/ef562165-f427-434d-a472-1244b3e430f6
 ## Contribute
 
 Read the [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on submitting issues and pull requests.
-See [Maintaining the Installation Selector](docs/user-guide/maintenance/installation-selector.md)
+See [Maintaining the Installation Selector](docs/edgepack-installer-files/README.md)
 when changing installation metadata or the Web UI.
 
 ## Community and Support

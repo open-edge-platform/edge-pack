@@ -1,16 +1,22 @@
+<!--hide_directive ```{eval-rst}
+.. meta::
+   :description: Install Edge Pack non-interactively using the installer CLI.
+   :keywords: Edge Pack, installer CLI, automation, installation
+``` hide_directive-->
+
 # Install with the Installer CLI
 
-The installer CLI is the non-interactive counterpart to the TUI. It performs
-the same host, profile, add-on, repository, and dependency checks, making it the
-preferred automation interface when a terminal wizard is unsuitable.
+The installer CLI is the non-interactive counterpart to the TUI (terminal user interface).
+It performs the same host, profile, add-on, repository, and dependency checks, making it
+the preferred automation interface when a terminal wizard is unsuitable.
 
-## List profiles
+## List Profiles
 
 ```bash
 ./edgepack-installer list
 ```
 
-## Install profiles
+## Install Profiles
 
 Pass exactly one base profile followed by zero or more add-ons:
 
@@ -27,7 +33,7 @@ The command exits without changing packages when host validation or profile
 compatibility fails. It does not prompt for confirmation, so review the command
 before using it in automation.
 
-## Verify the release download
+## Verify the Release Download
 
 The selector downloads the installer and its published SHA-256 checksum from
 the latest GitHub release. Always verify the binary before running it:
@@ -38,7 +44,7 @@ sha256sum -c edgepack-installer.sha256
 
 Do not run the installer when its checksum does not match.
 
-## Run from source
+## Run from Source
 
 For development checkouts:
 

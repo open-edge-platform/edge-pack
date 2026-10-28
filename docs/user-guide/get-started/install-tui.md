@@ -1,7 +1,13 @@
-# Install Edge Pack With TUI
+<!--hide_directive ```{eval-rst}
+.. meta::
+   :description: Install Edge Pack using the terminal-based TUI installer wizard.
+   :keywords: Edge Pack, TUI installer, terminal user interface, installation
+``` hide_directive-->
 
-TUI is the recommended installation method. It is a terminal-based wizard built with
-[Textual](https://textual.textualize.io/) that
+# Install with the TUI
+
+The TUI (terminal user interface) is the recommended installation method. It is a
+terminal-based wizard built with [Textual](https://textual.textualize.io/) that
 detects the host platform, Ubuntu release, and kernel before presenting compatible base
 profiles and add-ons. No need for hand-crafting `apt` commands or configuring the repository.
 To start, follow the steps:
@@ -57,7 +63,7 @@ deployment-specific information.
 
 
 
-## How to run from source
+## How to Run from Source
 
 ### Requirements
 
@@ -90,12 +96,12 @@ python3 -m tui list
 
 ---
 
-## How to build a standalone executable (PyInstaller)
+## How to Build a Standalone Executable (PyInstaller)
 
 The installer can be packaged into a single self-contained binary that requires no Python or
 dependencies on the target machine.
 
-> [!Note]
+> [!NOTE]
 > Build on **Ubuntu 24.04 (Noble)** to ensure glibc compatibility with target
   machines running Ubuntu 24.04 or 26.04.
 
@@ -114,7 +120,7 @@ pip install pyinstaller
 
 The `build.sh` script installs PyInstaller, runs the spec, and reports the output path.
 
-### Distributing the binary
+### Distributing the Binary
 
 Copy `dist/edgepack-installer` to the target machine and run:
 
