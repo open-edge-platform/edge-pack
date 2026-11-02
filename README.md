@@ -2,7 +2,20 @@
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 
-Edge Pack is a curated collection of Intel-validated software packages and drivers that unlock specific Intel platform capabilities — such as graphics and media acceleration, the Neural Processing Unit (NPU), platform manageability, and real-time kernel support — on top of stock Ubuntu LTS installations. Rather than hunting down individual drivers, PPAs, and kernel packages and figuring out how they fit together, EdgePack packages them into validated, ready-to-install profiles for supported Intel platforms.
+Edge Pack is a set of modular platform software packages that installs key
+functionality for your operating system, including graphics, media, edge AI,
+networking, and manageability. Install Edge Pack with the interactive
+text-based installer (TUI), the installer CLI, or the native APT package
+management process.
+
+Edge Packs are grouped into technical domain areas so you can install the
+capabilities needed for a particular system or workload.
+
+<p align="center">
+	<a href="https://docs.openedgeplatform.intel.com/dev/OEP-articles/edge-pack/index.html">
+		<img src="https://img.shields.io/badge/Launch%20Web%20UI-0068B5?style=for-the-badge&labelColor=0068B5" alt="Launch the Edge Pack Web UI" />
+	</a>
+</p>
 
 *<mark>**[!NOTE]**</mark> Edge Pack is currently available as a **Tech Preview**.*
 
@@ -17,7 +30,7 @@ Edge Pack is a curated collection of Intel-validated software packages and drive
 
 | Profile | Name | Description |
 |---|---|---|
-| `base-standard` | Intel Edge Base Profile | Validated core Intel graphics/media packages, including the platform-enablement DKMS driver, for Ubuntu LTS |
+| `base-standard` | Intel Edge Base Profile | Graphics and media software with AI compute support |
 
 ### Add-on Profiles
 
@@ -25,8 +38,8 @@ Edge Pack is a curated collection of Intel-validated software packages and drive
 |---|---|---|
 | `ffmpeg` | FFmpeg | FFmpeg multimedia framework with Intel GPU support |
 | `gstreamer` | GStreamer | GStreamer multimedia framework with Intel GPU support |
-| `npu` | NPU | Enables Intel's Neural Processing Unit (NPU) technology on Edge platforms |
-| `manageability` | Manageability | Enables Intel's vPRO Manageability on Edge platforms |
+| `npu` | NPU | Software to enable Intel's Neural Processing Unit (NPU) on Edge platforms |
+| `manageability` | Manageability | Software to enable Intel vPro manageability on Edge platforms |
 
 
 ## Supported Platforms
@@ -46,22 +59,45 @@ Edge Pack is a curated collection of Intel-validated software packages and drive
 
 ## Getting Started
 
-The recommended way to install Edge Pack is through the Edge Pack TUI Installer, a terminal-based wizard that detects your platform and OS, then guides you through profile selection, add-on packages, an installation summary, and live installation progress — without requiring you to hand-craft `apt` commands or repository configuration yourself.
+Choose the target system and installation method in the
+[interactive installation selector](docs/user-guide/index.md).
+It generates commands for the selected Ubuntu release, installation method,
+profile, and add-ons directly from the same manifest used by the installer.
+
+Three installation methods are available:
+
+| Method | Best for | Guide |
+| --- | --- | --- |
+| TUI installer | Guided, interactive installations | [Install with the TUI](docs/user-guide/get-started/install-tui.md) |
+| Installer CLI | Automation with installer compatibility checks | [Install with the installer CLI](docs/user-guide/get-started/install-cli.md) |
+| APT | Native package management and provisioning workflows | [Install with APT](docs/user-guide/get-started/install-apt.md) |
+
+The TUI installer is recommended for most users. It detects the platform and OS,
+then guides you through profile selection, add-ons, a summary, and installation
+progress.
 
 ```bash
 # 1. Verify the downloaded binary against its published checksum
-sha256sum -c edgepack-installer.sha256
+sha256sum -c edgepack-installer.sha256 &&
 
-# 2. Run the interactive wizard
+# 2. Run the interactive wizard only when verification succeeds
 sudo ./edgepack-installer
 ```
-For detailed installation instructions, please refer to the video tutorial below:
+
+See the [Get Started guide](docs/user-guide/get-started.md) for a comparison of the
+methods and the [system requirements](docs/user-guide/get-started/system-requirements.md).
+To convert a supported Ubuntu Desktop installation to a console-only system, see the
+[headless Ubuntu guide](docs/user-guide/ubuntu-desktop-remove-display.md).
+
+The following video demonstrates the TUI workflow:
 
 https://github.com/user-attachments/assets/ef562165-f427-434d-a472-1244b3e430f6
 
 ## Contribute
 
 Read the [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on submitting issues and pull requests.
+See [Maintaining the Installation Selector](docs/edgepack-installer-files/README.md)
+when changing installation metadata or the Web UI.
 
 ## Community and Support
 

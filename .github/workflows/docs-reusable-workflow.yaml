@@ -1,0 +1,63 @@
+name: Build Documentation
+
+on:
+  workflow_call:
+    inputs:
+      docs_directory:
+        description: Documentation directory where the job will run
+        required: false
+        default: "."
+        type: string
+      simple_mode:
+        description: Use the OEP template for a simple documentation site
+        required: false
+        default: true
+        type: boolean
+      exclude_patterns:
+        description: Comma-separated Sphinx exclude patterns
+        required: false
+        default: ""
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build-documentation:
+    runs-on: ubuntu-latest
+    env:
+      DOCS_DIR: ${{ inputs.docs_directory }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+          persist-credentials: false
+
+      - name: Download OEP documentation template
+        if: ${{ inputs.simple_mode }}
+        run: |
+          cd "${GITHUB_WORKSPACE}/${DOCS_DIR}"
+          wget https://docs.openedgeplatform.intel.com/template/template.tar.gz
+          tar xf template.tar.gz
+          if [[ -f dictionary_append.txt ]]; then
+            cat dictionary_append.txt >> dict.txt
+          fi
+
+      - name: Add exclude patterns
+        env:
+          EXCLUDE: ${{ inputs.exclude_patterns }}
+        run: |
+          exclude_no_spaces="${EXCLUDE// /}"
+          exclude_pattern="[\"${exclude_no_spaces//,/\", \"}\"]"
+          while IFS= read -r conf_file; do
+            echo "exclude_patterns.extend(${exclude_pattern})" >> "${conf_file}"
+          done < <(find "${GITHUB_WORKSPACE}" -type f -path "*/docs/conf.py")
+
+      - name: Build documentation
+        env:
+          SIMPLE_MODE: ${{ inputs.simple_mode }}
+        run: |
+          cd "${GITHUB_WORKSPACE}/${DOCS_DIR}"
+          make build

@@ -1,0 +1,38 @@
+name: Selector Config Check
+
+on:
+  pull_request:
+    branches:
+      - main
+      - release-*
+    paths:
+      - ".github/workflows/selector-config-check.yaml"
+      - "docs/edgepack-installer-files/**"
+      - "docs/user-guide/index.md"
+      - "docs/user-guide/ubuntu-desktop-remove-display.md"
+      - "edgepack-installer/data/edgepacks-template.yml"
+      - "scripts/build-install-selector-config.py"
+      - "scripts/validate-install-selector.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-selector:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install selector dependencies
+        run: pip install PyYAML==6.0.2
+      - name: Validate generated selector
+        run: |
+          python3 scripts/build-install-selector-config.py --check
+          python3 scripts/validate-install-selector.py
