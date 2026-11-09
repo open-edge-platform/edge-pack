@@ -22,6 +22,8 @@ To start, follow the steps:
    sudo ./edgepack-installer
    ```
 
+   The public installer uses signed repositories at `apt.repos.intel.com`.
+
 3. Go through a 4-step wizard.
 
    - Confirm the detected platform and choose a base profile.

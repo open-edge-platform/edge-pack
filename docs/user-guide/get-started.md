@@ -9,7 +9,7 @@
 To deploy Edge Pack, make sure your setup meets the [system requirements](./get-started/system-requirements.md).
 
 Edge Pack supports three installation methods, all using the compatibility, repository, and
-package definitions in `edgepack-installer/data/edgepacks-template.yml`. Select the
+package definitions in the [installer manifest](https://github.com/open-edge-platform/edge-pack/blob/main/edgepack-installer/data/edgepacks-template.yml). Select the
 installation method best suited to your setup using the form below, or compare them here:
 
 | Method                                      | Host validation | Interactive | Intended use |
@@ -28,7 +28,7 @@ a supported combination.
 <iframe
 	id="installerFrame"
 	src="../../_static/edgepack-installer-files/selector.html"
-	style="width: 100%; min-width: 350px; border: 0; overflow: hidden;"
+	style="width: 100%; min-width: 0; border: 0; overflow: hidden;"
 	title="Install Edge Pack"
 ></iframe>
 hide_directive-->
@@ -50,15 +50,25 @@ hide_directive-->
 
 
 > [!WARNING]
-> It is advisable to install Edge Pack on a freshly installed [Ubuntu Linux](https://releases.ubuntu.com/).
-> Before installing, make sure your setup meets the [system requirements](./get-started/system-requirements.md).
-> Ubuntu 24.04.4's default base Kernel is 6.17. Upgrade it to Kernel 7.0 manually:
->
-> ```
-> $ sudo apt-get update
-> $ sudo apt install -y linux-generic-7.0
-> $ sudo reboot
-> ```
+> Start with a fresh Ubuntu 24.04.5.1 or Ubuntu 26.04.1 Desktop installation on a
+> supported Panther Lake or Wildcat Lake platform. Confirm the
+> [system requirements](./get-started/system-requirements.md), including the
+> Ubuntu kernel requirement, before installing.
+
+These public installation instructions use Intel's signed APT repository at
+<https://apt.repos.intel.com/edgepack/> and the
+[public installer releases](https://github.com/open-edge-platform/edge-pack/releases).
+
+Updating Ubuntu to the latest Stable Release Update (SRU) kernel is optional
+when the ISO's kernel already meets the system requirements. To update:
+
+```bash
+sudo apt update
+sudo apt upgrade
+sudo reboot
+```
+
+Skip this upgrade if you intend to retain the supported kernel supplied by the ISO.
 
 For console-only deployments, complete the installation first, then follow
 [Convert Ubuntu Desktop to Behave Like Ubuntu Server](./ubuntu-desktop-remove-display.md).

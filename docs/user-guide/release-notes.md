@@ -40,3 +40,16 @@ Terminal-based wizard for installing Edge Pack software packages on supported Li
 - New installation setup guide — step-by-step guide for preparing supported platforms before
   running the installer.
 
+### Public Installation Guidance
+
+Use the [Get Started guide](./get-started.md) for public installation commands.
+It uses Intel's signed public repository at <https://apt.repos.intel.com/edgepack/>
+and the [public installer releases](https://github.com/open-edge-platform/edge-pack/releases).
+
+The current manifest does not offer the realtime base profile and adds the
+Kobuk snapshot only for the Ubuntu 24.04 NPU add-on. Refer to the
+[system requirements](./get-started/system-requirements.md) and generated
+installation commands for current availability. For no-display deployments on either supported Ubuntu
+Desktop release, install Edge Pack first, then follow the
+[headless conversion guide](./ubuntu-desktop-remove-display.md).
+

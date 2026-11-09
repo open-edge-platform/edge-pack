@@ -47,8 +47,12 @@ capabilities needed for a particular system or workload.
 | Ecosystem | Support |
 |---|---|
 | Platform | Intel Panther Lake (PTL), Intel Wildcat Lake (WCL) |
-| Linux Distro | Ubuntu 24.04 (Desktop), Ubuntu 26.04 (Desktop) |
-| Kernel | Ubuntu Kernel 7.0+ generic, Ubuntu Kernel 7.0+ real-time (Ubuntu 26.04 only) |
+| Linux Distro | Fresh Ubuntu 24.04.5.1 (Desktop), Ubuntu 26.04.1 (Desktop) |
+| Kernel | Ubuntu Kernel 7.0+ generic |
+
+The current installer manifest disables the realtime base profile. See the
+[system requirements](docs/user-guide/get-started/system-requirements.md) for
+the distinction from the release instructions' Ubuntu 26.04 realtime support.
 
 ### Supported SKUs
 
@@ -60,7 +64,7 @@ capabilities needed for a particular system or workload.
 ## Getting Started
 
 Choose the target system and installation method in the
-[interactive installation selector](docs/user-guide/index.md).
+[interactive installation selector](docs/user-guide/get-started.md).
 It generates commands for the selected Ubuntu release, installation method,
 profile, and add-ons directly from the same manifest used by the installer.
 
@@ -75,6 +79,9 @@ Three installation methods are available:
 The TUI installer is recommended for most users. It detects the platform and OS,
 then guides you through profile selection, add-ons, a summary, and installation
 progress.
+
+Public installations use <https://apt.repos.intel.com/edgepack/> and the
+[public GitHub releases](https://github.com/open-edge-platform/edge-pack/releases).
 
 ```bash
 # 1. Verify the downloaded binary against its published checksum
