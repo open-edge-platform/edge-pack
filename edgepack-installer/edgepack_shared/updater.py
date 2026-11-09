@@ -9,7 +9,7 @@ from .log import ep_logger
 # exhaustion from a malicious or compromised upstream manifest server.
 _MAX_RECIPE_SIZE = 1 * 1024 * 1024
 
-manifest_repo = "http://andromeda01.png.intel.com/Generic/edgepack/"
+manifest_repo = None
 
 
 def _safe_url(url: str) -> str:
@@ -54,6 +54,8 @@ class AutoUpdater:
     _MAX_CRAWL_DEPTH = 10  # Prevent unbounded recursion from directory-bomb payloads
 
     def _crawl(self, url, depth: int = 0):
+        if not url:
+            return []
         if depth > self._MAX_CRAWL_DEPTH:
             self.logger.debug("Crawl depth exceeded for %s — stopping", _safe_url(url))
             return []
@@ -131,7 +133,7 @@ class AutoUpdater:
         try:
             self._crawl(manifest_repo)
         except requests.exceptions.Timeout:
-            self.logger.debug("Request timed out. Check proxy settings or network connectivity.")
+            self.logger.debug("Request timed out. Check network connectivity.")
             self.logger.warning("Failed to fetch the latest installation recipe from repo.")
         except requests.exceptions.RequestException as e:
             self.logger.debug("Request failed: %s", _sanitize_msg(str(e)))

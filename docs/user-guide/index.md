@@ -74,7 +74,7 @@ Conflicting or unsupported combinations are flagged before anything is installed
 
 
 
-Currently, Edge Pack supports Ubuntu Desktop LTS 24.04.5 (Noble) and LTS 26.04.1 (Resolute),
+Currently, Edge Pack supports fresh Ubuntu Desktop LTS 24.04.5.1 (Noble) and LTS 26.04.1 (Resolute) installations,
 deployed on Intel® Core™ Ultra Series 3 (formerly codenamed as Panther Lake) and
 Intel® Core™ Series 3.
 See [system requirements](./get-started/system-requirements.md) for more details.

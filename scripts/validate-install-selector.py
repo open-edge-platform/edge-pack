@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -73,6 +74,25 @@ def main() -> int:
             raise ValueError(f"APT repositories are not bound to a keyring: {identity}")
         if "apt-key" in apt_commands or "trusted=yes" in apt_commands:
             raise ValueError(f"Unsafe legacy APT configuration found: {identity}")
+        suite = selection["os"].removeprefix("ubuntu_")
+        for required_public_setting in (
+            f"] https://apt.repos.intel.com/edgepack/ {suite} stable",
+            "https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB",
+            "Pin: origin apt.repos.intel.com",
+            "Pin-Priority: 1001",
+        ):
+            if required_public_setting not in apt_commands:
+                raise ValueError(f"Missing public APT setting for selection: {identity}")
+        for method, method_commands in commands.items():
+            for url in re.findall(r"https?://[^\s'\"]+", method_commands):
+                parsed_url = urlparse(url)
+                if parsed_url.scheme != "https" or parsed_url.hostname not in {
+                    "apt.repos.intel.com",
+                    "github.com",
+                    "snapshot.ppa.launchpadcontent.net",
+                    "keyserver.ubuntu.com",
+                }:
+                    raise ValueError(f"Unexpected {method} download host for selection: {identity}")
         if "edgepack-prerequisite" in apt_commands:
             raise ValueError(f"Conflicting prerequisite repository naming found: {identity}")
         if "intel-edge-npu" in installation["packages"]:
@@ -88,6 +108,13 @@ def main() -> int:
             raise ValueError(f"No packages resolved for selection: {identity}")
         for method in ("tui", "installer-cli"):
             installer_commands = commands[method]
+            for asset in ("edgepack-installer", "edgepack-installer.sha256"):
+                public_url = (
+                    "https://github.com/open-edge-platform/edge-pack/releases/latest/download/"
+                    + asset
+                )
+                if public_url not in installer_commands:
+                    raise ValueError(f"Missing public {method} download for selection: {identity}")
             for required_gate in (
                 "sha256sum -c edgepack-installer.sha256 &&\n",
                 "chmod +x edgepack-installer &&\n",

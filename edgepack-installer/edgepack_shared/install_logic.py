@@ -15,41 +15,14 @@ PREFERENCES_PATH = "/etc/apt/preferences.d/edgepack.pref"
 DEFAULT_PIN_PRIORITY = 1001
 
 
-_INTEL_NO_PROXY = (
-    "localhost,.local,127.0.0.0/8,10.0.0.0/8,192.168.0.0/16,172.16.0.0/12"
-)
-
-
 def _proxy_env_exports() -> str:
-    """Build 'export VAR=value' lines for proxy env vars set in the user session.
-
-    pkexec runs in a clean environment and strips proxy variables, so apt inside
-    the root shell won't respect the user's no_proxy / http_proxy settings.
-    We re-inject them at the top of the install script so apt routes correctly.
-
-    no_proxy always includes the Intel internal address ranges; any additional
-    entries already set in the user session are merged in.
-    """
+    """Preserve user-supplied network configuration across privilege elevation."""
     exports = []
-
-    # Pass through http/https proxy from user session if set
-    for var in ("http_proxy", "https_proxy", "HTTP_PROXY", "HTTPS_PROXY"):
-        val = os.environ.get(var)
-        if val:
-            safe = val.replace("'", "'\\''")
-            exports.append(f"export {var}='{safe}'")
-
-    # Build no_proxy: always include Intel ranges, extend with user's entries
-    user_no_proxy = os.environ.get("no_proxy") or os.environ.get("NO_PROXY") or ""
-    extra = ",".join(
-        e for e in user_no_proxy.split(",")
-        if e.strip() and e.strip() not in _INTEL_NO_PROXY
-    )
-    merged_no_proxy = _INTEL_NO_PROXY + ("," + extra if extra else "")
-    exports.append(f"export no_proxy='{merged_no_proxy}'")
-    exports.append(f"export NO_PROXY='{merged_no_proxy}'")
-
-    return "\n".join(exports) + "\n"
+    for variable in ("http_proxy", "https_proxy", "HTTP_PROXY", "HTTPS_PROXY", "no_proxy", "NO_PROXY"):
+        value = os.environ.get(variable)
+        if value is not None:
+            exports.append(f"export {variable}={shlex.quote(value)}\n")
+    return "".join(exports)
 
 
 # ---------------------------------------------------------------------------
