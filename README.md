@@ -65,7 +65,7 @@ See [system requirements](./get-started/system-requirements.md) for more details
 
 | Platform | Supported SKUs (CPU model) |
 |---|---|
-| Intel Panther Lake (PTL) | 338H, 358H, 356H, 368H, 388H, 325H, 345H, 355H, 375H |
+| Intel Panther Lake (PTL) | 315, 322, 325, 325H, 332, 335, 336H, 338H, 345H, 355, 355H, 356H, 358H, 360, 365, 366H, 368H, 375H, 386H, 388H |
 | Intel Wildcat Lake (WCL) | 304, 305, 310, 320, 330, 350 |
 
 ## Getting Started
