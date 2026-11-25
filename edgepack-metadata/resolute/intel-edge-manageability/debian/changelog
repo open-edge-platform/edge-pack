@@ -1,3 +1,28 @@
+intel-edge-manageability (1.0~resolute9) resolute; urgency=medium
+
+  * Bump edge-mei-dkms dependency version.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Fri, 30 Oct 2026 10:33:29 +0800
+
+intel-edge-manageability (1.0~resolute8) resolute; urgency=medium
+
+  * Update intel-edge-manageability meta-package to pin exact version
+    constraint.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Mon, 26 Oct 2026 15:20:05 +0800
+
+intel-edge-manageability (1.0~resolute7) resolute; urgency=medium
+
+  * Bump rpc-go version.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Mon, 05 Oct 2026 14:44:14 +0800
+
+intel-edge-manageability (1.0~resolute6) resolute; urgency=medium
+
+  * Update intel-edge-manageability meta-packages version constraints.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Fri, 02 Oct 2026 17:30:11 +0800
+
 intel-edge-manageability (1.0~resolute5) resolute; urgency=medium
 
   * Renamed mei-dkms to edge-mei-dkms.

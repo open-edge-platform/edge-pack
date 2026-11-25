@@ -1,0 +1,41 @@
+Source: intel-edge-xpu
+Section: metapackages
+Priority: optional
+Maintainer: Tan Wen Yan <wen.yan.tan@intel.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.7.4
+Rules-Requires-Root: no
+
+Package: intel-edge-npu
+Architecture: amd64
+Depends:
+ intel-driver-compiler-npu (= 1.38.0.20260910-34487311128~ubuntu26.04),
+ intel-fw-npu (= 1.38.0.20260910-34487311128~ubuntu26.04),
+ intel-level-zero-npu (= 1.38.0.20260910-34487311128~ubuntu26.04),
+ libtbb12,
+ libze1 (= 1.32.0-1~26.04~ppa1)
+Description: Intel Edge NPU metapackage
+ Installs the Intel Edge NPU runtime and related components.
+ This package is a metapackage and contains no payload files.
+
+Package: intel-edge-compute-extra
+Architecture: amd64
+Depends:
+# clinfo is installed from Ubuntu archive
+ clinfo,
+ intel-gsc (= 1.2.0-1~26.04~ppa1),
+ intel-metrics-discovery (= 1.14.188-1~26.04~ppa1),
+ intel-opencl-icd (= 26.27.39122.14-1~26.04~ppa1),
+ libze-intel-gpu1 (= 26.27.39122.14-1~26.04~ppa1),
+ libze1 (= 1.32.0-1~26.04~ppa1),
+# libze-dev and intel-ocloc are needed for ahead-of-time (AoT) compilation,
+# such as building SYCL or PyTorch applications from source or precompiling
+# kernels for a specific device with -device bmg
+ libze-dev (= 1.32.0-1~26.04~ppa1),
+ intel-ocloc (= 26.27.39122.14-1~26.04~ppa1)
+# The following packages are also pulled in as dependencies: libigc2,
+# libigdfcl2, libigdgmm12 (from intel-edge-media), libigsc1, libmetee-dev,
+# libmetee6, and ocl-icd-libopencl1 (from Ubuntu archive).
+Description: Intel Edge compute extra metapackage
+ Installs Intel Edge compute runtime and related tools for Intel GPU workloads.
+ This package is a metapackage and contains no payload files.

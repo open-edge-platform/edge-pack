@@ -1,0 +1,47 @@
+intel-edge-xpu (1.0~resolute3) resolute; urgency=medium
+
+  * Pin Edge Pack dependencies to exact versions.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Mon, 26 Oct 2026 15:25:54 +0800
+
+intel-edge-xpu (1.0~resolute2) resolute; urgency=medium
+
+  * Add minimum versions for dependencies.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Fri, 02 Oct 2026 16:39:06 +0800
+
+intel-edge-xpu (1.0~resolute1) resolute; urgency=medium
+
+  * Add initial resolute packaging including intel-edge-compute-extra metapackage.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Mon, 28 Sep 2026 14:52:22 +0800
+
+intel-edge-npu (1.0~noble5) noble; urgency=medium
+
+  * Drop the version constraint on the libze1 dependency.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Mon, 28 Sep 2026 13:15:49 +0800
+
+intel-edge-npu (1.0~noble4) noble; urgency=medium
+
+  * Hardcode libze1 dependency to version 1.28.2-1~24.04~ppa1.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Thu, 06 Aug 2026 15:28:52 +0800
+
+intel-edge-npu (1.0~noble3) noble; urgency=medium
+
+  * Rename to intel-edge-npu and collapse to a single 5-dependency NPU metapackage including libze1.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Thu, 06 Aug 2026 10:59:00 +0800
+
+intel-edge-ai (1.0~noble2) noble; urgency=medium
+
+  * Remove intel-dlstreamer from metapackage.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Mon, 29 Jun 2026 00:00:00 +0000
+
+intel-edge-ai (1.0~noble1) noble; urgency=medium
+
+  * Initial release.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Mon, 25 May 2026 00:00:00 +0000

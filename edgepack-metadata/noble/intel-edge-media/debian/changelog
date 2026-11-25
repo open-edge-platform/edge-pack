@@ -1,3 +1,35 @@
+intel-edge-media (1.0~noble8) noble; urgency=medium
+
+  * Update intel-edge-media meta-package to pin exact version
+    constraint.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Fri, 30 Oct 2026 16:04:15 +0800
+
+intel-edge-media (1.0~noble7) noble; urgency=medium
+
+  * Add intel-edge-media-dev for -dev and -doc packages.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Fri, 16 Oct 2026 14:59:03 +0800
+
+intel-edge-media (1.0~noble6) noble; urgency=medium
+
+  * Update intel-edge-media meta-packages version constraints.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Fri, 02 Oct 2026 19:01:25 +0800
+
+intel-edge-media (1.0~noble5) noble; urgency=medium
+
+  * Drop dependency on intel-gmmlib.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Wed, 30 Sep 2026 17:02:08 +0800
+
+intel-edge-media (1.0~noble4) noble; urgency=medium
+
+  * Drop dependencies on libavcodec62, libavfilter11, and libavformat62;
+    install their corresponding extra variants instead.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Mon, 28 Sep 2026 12:26:51 +0800
+
 intel-edge-media (1.0~noble3) noble; urgency=medium
 
   * Split metapackage into media-core, media-gst, and media-ffmpeg.

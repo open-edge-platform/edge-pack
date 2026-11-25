@@ -1,3 +1,21 @@
+intel-edge-tsn (1.0~resolute6) resolute; urgency=medium
+
+  * Remove version constraints for dependencies installed from Ubuntu repo.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Wed, 28 Oct 2026 10:32:04 +0800
+
+intel-edge-tsn (1.0~resolute5) resolute; urgency=medium
+
+  * Add intel-edge-tsn-dev for -dev and -doc packages.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Fri, 16 Oct 2026 15:47:25 +0800
+
+intel-edge-tsn (1.0~resolute4) resolute; urgency=medium
+
+  * Add minimum versions for dependencies.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Fri, 02 Oct 2026 17:58:52 +0800
+
 intel-edge-tsn (1.0~resolute3) resolute; urgency=medium
 
   * Add back dependencies to be installed from the official Ubuntu repo.

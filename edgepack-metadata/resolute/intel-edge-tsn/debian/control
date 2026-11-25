@@ -15,9 +15,15 @@ Depends:
  linuxptp,
 # from xdp-tools
  libxdp1,
- libxdp-dev,
  xdp-tools,
  xdp-tests
 Description: Intel Edge TSN metapackage
  Installs the Intel Edge TSN software stack.
  This package is a metapackage and contains no payload files.
+
+Package: intel-edge-tsn-dev
+Architecture: amd64
+Depends:
+ libxdp-dev
+Description: Intel Edge TSN development files and documentation
+ Provides development files and documentation for the Intel Edge TSN software stack.

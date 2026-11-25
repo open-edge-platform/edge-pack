@@ -10,23 +10,18 @@ Package: intel-edge-graphics-core
 Architecture: amd64
 Depends:
 # from mesa
- libegl-mesa0,
- libegl1-mesa-dev,
- libgbm-dev,
- libgbm1,
- libgl1-mesa-dev,
- libgl1-mesa-dri,
- libgles2-mesa-dev,
- libglx-mesa0,
- mesa-common-dev,
- mesa-drm-shim,
- mesa-libgallium,
- mesa-opencl-icd,
- mesa-vulkan-drivers,
+ libegl-mesa0 (= 26.0.8-1ppa1~noble2),
+ libgbm1 (= 26.0.8-1ppa1~noble2),
+ libgl1-mesa-dri (= 26.0.8-1ppa1~noble2),
+ libglx-mesa0 (= 26.0.8-1ppa1~noble2),
+ mesa-drm-shim (= 26.0.8-1ppa1~noble2),
+ mesa-libgallium (= 26.0.8-1ppa1~noble2),
+ mesa-opencl-icd (= 26.0.8-1ppa1~noble2),
+ mesa-vulkan-drivers (= 26.0.8-1ppa1~noble2),
 # from libdrm (installed from Ubuntu repo)
  libdrm2,
 # from dkms
- edge-gfx-dkms
+ edge-gfx-dkms (= 7.0-261029T091039Z)
 Description: Intel Edge graphics core runtime metapackage
  Installs the core Intel Edge graphics runtime stack for headless or CLI systems.
  This metapackage provides Mesa and GPU userspace dependencies without display
@@ -35,36 +30,27 @@ Description: Intel Edge graphics core runtime metapackage
 Package: intel-edge-graphics-display
 Architecture: amd64
 Depends:
- intel-edge-graphics-core,
-# from wayland
+ intel-edge-graphics-core (= 1.0~noble15),
+# from wayland (installed from Ubuntu repo)
  libwayland-bin,
  libwayland-client0,
  libwayland-cursor0,
- libwayland-dev,
- libwayland-doc,
- libwayland-egl-backend-dev,
  libwayland-egl1,
  libwayland-server0,
 # from mutter
- gir1.2-mutter-14,
- libmutter-14-0,
- libmutter-14-dev,
- libmutter-test-14,
- mutter,
- mutter-14-tests,
- mutter-common,
- mutter-common-bin,
-# from weston
- libweston-10-0,
- libweston-10-dev,
- weston,
-# from xorg-server
+ gir1.2-mutter-14 (= 46.2-1.0.24.04.14-1ppa1~noble2),
+ libmutter-14-0 (= 46.2-1.0.24.04.14-1ppa1~noble2),
+ libmutter-test-14 (= 46.2-1.0.24.04.14-1ppa1~noble2),
+ mutter (= 46.2-1.0.24.04.14-1ppa1~noble2),
+ mutter-14-tests (= 46.2-1.0.24.04.14-1ppa1~noble2),
+ mutter-common (= 46.2-1.0.24.04.14-1ppa1~noble2),
+ mutter-common-bin (= 46.2-1.0.24.04.14-1ppa1~noble2),
+# from xorg-server (installed from Ubuntu repo)
  xnest,
  xorg-server-source,
  xserver-common,
  xserver-xephyr,
  xserver-xorg-core,
- xserver-xorg-dev,
  xserver-xorg-legacy,
  xvfb
 Description: Intel Edge graphics display metapackage
@@ -99,21 +85,60 @@ Depends:
  qemu-user-binfmt | qemu-user-static,
  qemu-utils,
 # from spice
- libspice-server-dev,
  libspice-server1,
 # from spice-gtk
  gir1.2-spiceclientglib-2.0,
  gir1.2-spiceclientgtk-3.0,
  libspice-client-glib-2.0-8,
- libspice-client-glib-2.0-dev,
  libspice-client-gtk-3.0-5,
- libspice-client-gtk-3.0-dev,
  spice-client-glib-usb-acl-helper,
  spice-client-gtk
 Description: Intel Edge graphics SR-IOV virtualization metapackage
  Installs Intel Edge graphics SR-IOV dependencies for virtualized deployments.
  This metapackage includes core, display dependencies, and QEMU
  components for host and guest virtualization workflows.
+
+Package: intel-edge-graphics-core-dev
+Architecture: amd64
+Depends:
+# from mesa
+ libegl1-mesa-dev (= 26.0.8-1ppa1~noble2),
+ libgbm-dev (= 26.0.8-1ppa1~noble2),
+ libgl1-mesa-dev (= 26.0.8-1ppa1~noble2),
+ libgles2-mesa-dev (= 26.0.8-1ppa1~noble2),
+ mesa-common-dev (= 26.0.8-1ppa1~noble2)
+Description: Intel Edge graphics core -dev runtime metapackage
+ Installs the core Intel Edge graphics -dev runtime stack for headless or CLI systems.
+ This metapackage provides Mesa and GPU userspace dependencies without display
+ server components such as Wayland, Xorg, or desktop compositors.
+
+Package: intel-edge-graphics-display-dev
+Architecture: amd64
+Depends:
+# from wayland
+ libwayland-dev,
+ libwayland-doc,
+ libwayland-egl-backend-dev,
+# from mutter
+ libmutter-14-dev (= 46.2-1.0.24.04.14-1ppa1~noble2),
+# from xorg-server
+ xserver-xorg-dev
+Description: Intel Edge graphics display -dev and -doc metapackage
+ Installs Intel Edge graphics display -dev and -doc components on top of core graphics.
+ This metapackage adds Wayland, compositor, and Xorg server integration -dev and -doc for
+ local display use cases.
+
+Package: intel-edge-graphics-sriov-dev
+Architecture: amd64
+Depends:
+# from spice
+ libspice-server-dev,
+# from spice-gtk
+ libspice-client-glib-2.0-dev,
+ libspice-client-gtk-3.0-dev
+Description: Intel Edge graphics SR-IOV virtualization -dev metapackage
+ Installs Intel Edge graphics SR-IOV dependencies for virtualized -dev deployments.
+ This metapackage includes core, display dependencies, and QEMU -dev components for host and guest virtualization workflows.
 
 Package: intel-edge-graphics-udeb
 Package-Type: udeb

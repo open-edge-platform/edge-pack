@@ -1,3 +1,21 @@
+intel-edge-tsn (1.0~noble8) noble; urgency=medium
+
+  * Pin Edge Pack dependencies to exact versions.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Mon, 26 Oct 2026 15:06:28 +0800
+
+intel-edge-tsn (1.0~noble7) noble; urgency=medium
+
+  * Add intel-edge-tsn-dev for -dev and -doc packages.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Fri, 16 Oct 2026 15:24:08 +0800
+
+intel-edge-tsn (1.0~noble6) noble; urgency=medium
+
+  * Add minimum versions for dependencies.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Fri, 02 Oct 2026 17:30:49 +0800
+
 intel-edge-tsn (1.0~noble5) noble; urgency=medium
 
   * Removed dependencies version to get always latest version from Intel PPA.

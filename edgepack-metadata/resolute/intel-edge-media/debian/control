@@ -9,33 +9,28 @@ Rules-Requires-Root: no
 Package: intel-edge-media-core
 Architecture: amd64
 Depends:
- intel-edge-graphics-core,
- intel-edge-graphics-display,
+ intel-edge-graphics-core (= 1.0~resolute10),
+ intel-edge-graphics-display (= 1.0~resolute10),
 # from gmmlib
- intel-gmmlib,
- libigdgmm-dev,
- libigdgmm12,
-# from libva
- libva-dev,
+ libigdgmm12 (= 22.10.0-1~26.04~ppa1),
+# from libva (installed from Ubuntu repo)
  libva-drm2,
  libva-glx2,
  libva-wayland2,
  libva-x11-2,
  libva2,
  va-driver-all,
-# from libva-utils
+# from libva-utils (installed from Ubuntu repo)
  vainfo,
 # from media-driver-non-free
- intel-media-va-driver-non-free,
+ intel-media-va-driver-non-free (= 26.2.4-1ppa1~resolute1),
 # from onevpl (libvpl)
- libvpl-dev,
- libvpl2,
- onevpl-tools,
+ libvpl2 (= 1:2.17.0-1ppa1~resolute1),
+ libvpl-examples (= 1:2.17.0-1ppa1~resolute1),
 # from onevpl-intel-gpu
- libmfx-gen-dev,
- libmfx-gen1.2,
+ libmfx-gen1.2 (= 26.2.4-1ppa1~resolute1),
 # from libvpl-tools
- libvpl-tools
+ libvpl-tools (= 2:1.6.0~1ppa1-resolute1)
 Description: Intel Edge media core metapackage
  Installs the Intel Edge media core software stack.
  This package is a metapackage and contains no payload files.
@@ -43,47 +38,42 @@ Description: Intel Edge media core metapackage
 Package: intel-edge-media-gst
 Architecture: amd64
 Depends:
- intel-edge-media-core,
+ intel-edge-media-core (= 1.0~resolute8),
 # from gstreamer
- gir1.2-gstreamer-1.0,
- gstreamer1.0-tools,
- libgstreamer1.0-0,
- libgstreamer1.0-dev,
+ gir1.2-gstreamer-1.0 (= 1.28.2-1ppa1~resolute2),
+ gstreamer1.0-tools (= 1.28.2-1ppa1~resolute2),
+ libgstreamer1.0-0 (= 1.28.2-1ppa1~resolute2),
 # from gst-plugins-base
- gir1.2-gst-plugins-base-1.0,
- gstreamer1.0-alsa,
- gstreamer1.0-gl,
- gstreamer1.0-plugins-base,
- gstreamer1.0-plugins-base-apps,
- gstreamer1.0-x,
- libgstreamer-gl1.0-0,
- libgstreamer-plugins-base1.0-0,
- libgstreamer-plugins-base1.0-dev,
+ gir1.2-gst-plugins-base-1.0 (= 1.28.2-1.0.1-1ppa1~resolute2),
+ gstreamer1.0-alsa (= 1.28.2-1.0.1-1ppa1~resolute2),
+ gstreamer1.0-gl (= 1.28.2-1.0.1-1ppa1~resolute2),
+ gstreamer1.0-plugins-base (= 1.28.2-1.0.1-1ppa1~resolute2),
+ gstreamer1.0-plugins-base-apps (= 1.28.2-1.0.1-1ppa1~resolute2),
+ gstreamer1.0-x (= 1.28.2-1.0.1-1ppa1~resolute2),
+ libgstreamer-gl1.0-0 (= 1.28.2-1.0.1-1ppa1~resolute2),
+ libgstreamer-plugins-base1.0-0 (= 1.28.2-1.0.1-1ppa1~resolute2),
 # from gst-plugins-good
- gstreamer1.0-gtk3,
- gstreamer1.0-plugins-good,
- gstreamer1.0-pulseaudio,
- gstreamer1.0-qt5,
- gstreamer1.0-qt6,
+ gstreamer1.0-gtk3 (= 1.28.2-2.0.2-1ppa1~resolute2),
+ gstreamer1.0-plugins-good (= 1.28.2-2.0.2-1ppa1~resolute2),
+ gstreamer1.0-pulseaudio (= 1.28.2-2.0.2-1ppa1~resolute2),
+ gstreamer1.0-qt5 (= 1.28.2-2.0.2-1ppa1~resolute2),
+ gstreamer1.0-qt6 (= 1.28.2-2.0.2-1ppa1~resolute2),
 # from gst-plugins-bad
- gir1.2-gst-plugins-bad-1.0,
- gstreamer1.0-opencv,
- gstreamer1.0-plugins-bad,
- gstreamer1.0-plugins-bad-apps,
- libgstreamer-opencv1.0-0,
- libgstreamer-plugins-bad1.0-0,
- libgstreamer-plugins-bad1.0-dev,
- gir1.2-gst-plugins-extra-1.0,
- gstreamer1.0-plugins-extra,
- libgstreamer-plugins-extra1.0-0,
- libgstreamer-plugins-extra1.0-dev,
+ gir1.2-gst-plugins-bad-1.0 (= 1.28.2-1ppa1~resolute9),
+ gstreamer1.0-opencv (= 1.28.2-1ppa1~resolute9),
+ gstreamer1.0-plugins-bad (= 1.28.2-1ppa1~resolute9),
+ gstreamer1.0-plugins-bad-apps (= 1.28.2-1ppa1~resolute9),
+ libgstreamer-opencv1.0-0 (= 1.28.2-1ppa1~resolute9),
+ libgstreamer-plugins-bad1.0-0 (= 1.28.2-1ppa1~resolute9),
+ gir1.2-gst-plugins-extra-1.0 (= 1.28.2-1ppa1~resolute9),
+ gstreamer1.0-plugins-extra (= 1.28.2-1ppa1~resolute9),
+ libgstreamer-plugins-extra1.0-0 (= 1.28.2-1ppa1~resolute9),
 # from gst-plugins-ugly
- gstreamer1.0-plugins-ugly,
+ gstreamer1.0-plugins-ugly (= 1.28.2-1ppa1~resolute2),
 # from gst-rtsp-server
- gir1.2-gst-rtsp-server-1.0,
- gstreamer1.0-rtsp,
- libgstrtspserver-1.0-0,
- libgstrtspserver-1.0-dev
+ gir1.2-gst-rtsp-server-1.0 (= 1.28.2-1ppa1~resolute2),
+ gstreamer1.0-rtsp (= 1.28.2-1ppa1~resolute2),
+ libgstrtspserver-1.0-0 (= 1.28.2-1ppa1~resolute2)
 Description: Intel Edge media GStreamer metapackage
  Installs the Intel Edge media GStreamer software stack.
  This package is a metapackage and contains no payload files.
@@ -91,30 +81,66 @@ Description: Intel Edge media GStreamer metapackage
 Package: intel-edge-media-ffmpeg
 Architecture: amd64
 Depends:
- intel-edge-media-core,
+ intel-edge-media-core (= 1.0~resolute8),
 # from ffmpeg
- ffmpeg,
- ffmpeg-doc,
- libavcodec-dev,
- libavcodec-extra,
- libavcodec-extra62,
- libavcodec62,
- libavdevice-dev,
- libavdevice62,
- libavfilter-dev,
- libavfilter-extra,
- libavfilter-extra11,
- libavfilter11,
- libavformat-dev,
- libavformat-extra,
- libavformat-extra62,
- libavformat62,
- libavutil-dev,
- libavutil60,
- libswresample-dev,
- libswresample6,
- libswscale-dev,
- libswscale9
+ ffmpeg (= 8:8.1.2-1ppa1~resolute1),
+ libavcodec-extra (= 8:8.1.2-1ppa1~resolute1),
+ libavcodec-extra62 (= 8:8.1.2-1ppa1~resolute1),
+ libavdevice62 (= 8:8.1.2-1ppa1~resolute1),
+ libavfilter-extra (= 8:8.1.2-1ppa1~resolute1),
+ libavfilter-extra11 (= 8:8.1.2-1ppa1~resolute1),
+ libavformat-extra (= 8:8.1.2-1ppa1~resolute1),
+ libavformat-extra62 (= 8:8.1.2-1ppa1~resolute1),
+ libavutil60 (= 8:8.1.2-1ppa1~resolute1),
+ libswresample6 (= 8:8.1.2-1ppa1~resolute1),
+ libswscale9 (= 8:8.1.2-1ppa1~resolute1)
 Description: Intel Edge media FFmpeg metapackage
  Installs the Intel Edge media FFmpeg software stack.
+ This package is a metapackage and contains no payload files.
+
+Package: intel-edge-media-core-dev
+Architecture: amd64
+Depends:
+# from gmmlib
+ libigdgmm-dev (= 22.10.0-1~26.04~ppa1),
+# from libva (installed from Ubuntu repo)
+ libva-dev,
+# from onevpl (libvpl)
+ libvpl-dev (= 1:2.17.0-1ppa1~resolute1),
+# from onevpl-intel-gpu
+ libmfx-gen-dev (= 26.2.4-1ppa1~resolute1)
+Description: Intel Edge media core -dev metapackage
+ Installs the Intel Edge media core -dev software stack.
+ This package is a metapackage and contains no payload files.
+
+Package: intel-edge-media-gst-dev
+Architecture: amd64
+Depends:
+# from gstreamer
+ libgstreamer1.0-dev (= 1.28.2-1ppa1~resolute2),
+# from gst-plugins-base
+ libgstreamer-plugins-base1.0-dev (= 1.28.2-1.0.1-1ppa1~resolute2),
+# from gst-plugins-bad
+ libgstreamer-plugins-bad1.0-dev (= 1.28.2-1ppa1~resolute9),
+ libgstreamer-plugins-extra1.0-dev (= 1.28.2-1ppa1~resolute9),
+# from gst-rtsp-server
+ libgstrtspserver-1.0-dev (= 1.28.2-1ppa1~resolute2)
+Description: Intel Edge media GStreamer -dev metapackage
+ Installs the Intel Edge media GStreamer -dev software stack.
+ This package is a metapackage and contains no payload files.
+
+Package: intel-edge-media-ffmpeg-dev
+Architecture: amd64
+Depends:
+# from ffmpeg
+ ffmpeg-doc (= 8:8.1.2-1ppa1~resolute1),
+ libavcodec-dev (= 8:8.1.2-1ppa1~resolute1),
+ libavdevice-dev (= 8:8.1.2-1ppa1~resolute1),
+ libavfilter-dev (= 8:8.1.2-1ppa1~resolute1),
+ libavformat-dev (= 8:8.1.2-1ppa1~resolute1),
+ libavutil-dev (= 8:8.1.2-1ppa1~resolute1),
+ libswresample-dev (= 8:8.1.2-1ppa1~resolute1),
+ libswscale-dev (= 8:8.1.2-1ppa1~resolute1)
+Description: Intel Edge media FFmpeg -dev and -doc metapackage
+ Installs the Intel Edge media FFmpeg -dev and -doc software stack.
  This package is a metapackage and contains no payload files.

@@ -9,14 +9,18 @@ Rules-Requires-Root: no
 Package: intel-edge-base-realtime
 Architecture: amd64
 Depends:
- intel-edge-graphics-core,
- intel-edge-media-core,
- intel-edge-tsn,
- linux-firmware-intel-graphics,
- linux-firmware-intel-wireless,
+ intel-edge-graphics-core (= 1.0~resolute10),
+ intel-edge-media-core (= 1.0~resolute8),
+ intel-edge-tsn (= 1.0~resolute6),
+ intel-edge-npu (= 1.0~resolute3),
+ intel-edge-compute-extra (= 1.0~resolute3),
+ linux-firmware-intel-graphics (= 20260319.git217ca6e4-0.2.1-1ppa1-resolute1),
+ linux-firmware-intel-wireless (= 20260319.git217ca6e4-0.2-1ppa1-resolute5),
  ubuntu-realtime,
- edge-edac-dkms,
- edge-issei-dkms
+ edge-edac-dkms (= 7.0-261029T091039Z),
+ edge-issei-dkms (= 7.0-261029T091039Z),
+ edge-rapl-dkms (= 7.0-261029T091039Z),
+ edge-tgpio-dkms (= 7.0-261029T091039Z)
 Conflicts: intel-edge-base-standard
 Replaces: intel-edge-base-standard
 Description: Intel Edge base profile with desktop realtime(rt) metapackage bundle
@@ -26,13 +30,16 @@ Description: Intel Edge base profile with desktop realtime(rt) metapackage bundl
 Package: intel-edge-base-standard
 Architecture: amd64
 Depends:
- intel-edge-graphics-core,
- intel-edge-graphics-display,
- intel-edge-media-core,
- linux-firmware-intel-graphics,
- linux-firmware-intel-wireless,
- edge-edac-dkms,
- edge-issei-dkms
+ intel-edge-graphics-core (= 1.0~resolute10),
+ intel-edge-graphics-display (= 1.0~resolute10),
+ intel-edge-media-core (= 1.0~resolute8),
+ intel-edge-npu (= 1.0~resolute3),
+ intel-edge-compute-extra (= 1.0~resolute3),
+ linux-firmware-intel-graphics (= 20260319.git217ca6e4-0.2.1-1ppa1-resolute1),
+ linux-firmware-intel-wireless (= 20260319.git217ca6e4-0.2-1ppa1-resolute5),
+ edge-edac-dkms (= 7.0-261029T091039Z),
+ edge-issei-dkms (= 7.0-261029T091039Z),
+ edge-rapl-dkms (= 7.0-261029T091039Z)
 Conflicts: intel-edge-base-realtime, ubuntu-realtime
 Replaces: intel-edge-base-realtime
 Description: Intel Edge base profile of desktop non-rt metapackage bundle

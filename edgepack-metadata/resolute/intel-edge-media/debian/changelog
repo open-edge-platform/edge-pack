@@ -1,3 +1,34 @@
+intel-edge-media (1.0~resolute8) resolute; urgency=medium
+
+  * Update package versioning.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Fri, 30 Oct 2026 16:18:52 +0800
+
+intel-edge-media (1.0~resolute7) resolute; urgency=medium
+
+  * Add intel-edge-media-dev for -dev and -doc packages.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Fri, 16 Oct 2026 15:32:53 +0800
+
+intel-edge-media (1.0~resolute6) resolute; urgency=medium
+
+  * Update intel-edge-media meta-packages version constraints.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Fri, 02 Oct 2026 21:58:25 +0800
+
+intel-edge-media (1.0~resolute5) resolute; urgency=medium
+
+  * Drop dependency on intel-gmmlib.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Wed, 30 Sep 2026 17:02:08 +0800
+
+intel-edge-media (1.0~resolute4) resolute; urgency=medium
+
+  * Drop dependencies on libavcodec62, libavfilter11, and libavformat62;
+    install their corresponding extra variants instead.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Mon, 28 Sep 2026 12:35:21 +0800
+
 intel-edge-media (1.0~resolute3) resolute; urgency=medium
 
   * Add gst-plugins-bad extra split deps.

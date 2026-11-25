@@ -1,8 +1,33 @@
+intel-edge-base (1.0~noble18) noble; urgency=medium
+
+  * Update intel-edge-base meta-package to pin exact version constraint.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Tue, 27 Oct 2026 10:48:47 +0800
+
+intel-edge-base (1.0~noble17) noble; urgency=medium
+
+  * Removed intel-edge-ipu.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Wed, 07 Oct 2026 16:38:48 +0800
+
+intel-edge-base (1.0~noble16) noble; urgency=medium
+
+  * Added intel-edge-npu,intel-edge-compute-extra and intel-edge-ipu in
+    base standard profile.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Tue, 06 Oct 2026 13:34:32 +0800
+
+intel-edge-base (1.0~noble15) noble; urgency=medium
+
+  * Add minimum version constraints for dependencies.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Fri, 02 Oct 2026 22:26:59 +0800
+
 intel-edge-base (1.0~noble14) noble; urgency=medium
 
   * Renamed dkms meta-packages, removed intel-edge-media-ffmpeg and intel-edge-media-gst.
 
--- Tham Jing Hui <jing.hui.tham@intel.com>  Thu, 06 Aug 2026 15:13:02 +0800
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Thu, 06 Aug 2026 15:13:02 +0800
 
 intel-edge-base (1.0~noble13) noble; urgency=medium
 

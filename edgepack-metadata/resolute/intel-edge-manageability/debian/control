@@ -9,9 +9,9 @@ Rules-Requires-Root: no
 Package: intel-edge-manageability
 Architecture: amd64
 Depends:
- lms,
- rpc-go,
- edge-mei-dkms
+ lms (= 2550.0.0.0-1ppa1~resolute2),
+ rpc-go (= 2.52.5-1ppa1~resolute1),
+ edge-mei-dkms (= 7.0-261029T091039Z)
 Description: Intel Edge manageability metapackage
  Installs the Intel Edge manageability software stack.
  This package is a metapackage and contains no payload files.

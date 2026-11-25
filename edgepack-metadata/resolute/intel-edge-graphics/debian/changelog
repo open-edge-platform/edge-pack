@@ -1,3 +1,22 @@
+intel-edge-graphics (1.0~resolute10) resolute; urgency=medium
+
+  * Update intel-edge-graphics meta-package to pin exact version
+    constraint.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Mon, 26 Oct 2026 16:10:43 +0800
+
+intel-edge-graphics (1.0~resolute9) resolute; urgency=medium
+
+  * Add intel-edge-graphics for -dev and -doc packages.
+
+ -- Tham Jing Hui <jing.hui.tham@intel.com>  Fri, 16 Oct 2026 16:40:28 +0800
+
+intel-edge-graphics (1.0~resolute8) resolute; urgency=medium
+
+  * Add minimum versions for dependencies.
+
+ -- Tan Wen Yan <wen.yan.tan@intel.com>  Fri, 02 Oct 2026 18:56:24 +0800
+
 intel-edge-graphics (1.0~resolute7) resolute; urgency=medium
 
   * Renamed graphics-dkms to edge-gfx-dkms.

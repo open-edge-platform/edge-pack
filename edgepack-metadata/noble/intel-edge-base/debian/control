@@ -9,12 +9,16 @@ Rules-Requires-Root: no
 Package: intel-edge-base-standard
 Architecture: amd64
 Depends:
- intel-edge-graphics-core,
- intel-edge-graphics-display,
- intel-edge-media-core,
- linux-firmware,
- edge-edac-dkms,
- edge-issei-dkms
+ intel-edge-graphics-core (= 1.0~noble15),
+ intel-edge-graphics-display (= 1.0~noble15),
+ intel-edge-media-core (= 1.0~noble8),
+ intel-edge-npu (= 1.0~noble7),
+ intel-edge-compute-extra (= 1.0~noble7),
+ linux-firmware-intel-graphics (= 20240318.git3b128b60-0.3.1-1ppa1-noble2),
+ linux-firmware-intel-wireless (= 20240318.git3b128b60-0.3.1-1ppa1-noble2),
+ edge-edac-dkms (= 7.0-261029T091039Z),
+ edge-issei-dkms (= 7.0-261029T091039Z),
+ edge-rapl-dkms (= 7.0-261029T091039Z)
 Description: Intel Edge base profile of desktop non-rt metapackage bundle
  Installs the Intel Edge base non-rt metapackage bundle.
  This package is a metapackage and contains no payload files.

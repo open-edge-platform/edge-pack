@@ -9,13 +9,22 @@ Rules-Requires-Root: no
 Package: intel-edge-tsn
 Architecture: amd64
 Depends:
+# from iproute2
  iproute2,
- iproute2-doc,
- libxdp-dev,
+# from linuxptp
+ linuxptp (= 4.3-ppa1~noble2),
+# from xdp-tools
  libxdp1,
- linuxptp,
- xdp-tests,
- xdp-tools
+ xdp-tools,
+ xdp-tests
 Description: Intel Edge TSN metapackage
  Installs the Intel Edge TSN software stack.
  This package is a metapackage and contains no payload files.
+
+Package: intel-edge-tsn-dev
+Architecture: amd64
+Depends:
+ iproute2-doc,
+ libxdp-dev
+Description: Intel Edge TSN development files and documentation
+ Provides development files and documentation for the Intel Edge TSN software stack.
